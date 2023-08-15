@@ -1,0 +1,66 @@
+  <div
+        class="column has-background-primary-light mx-5"
+        :style="{ height: '600px','overflow':'auto' }"
+        @drop="onDrop($event, 'Backlog')"
+        @dragover.prevent
+        @dragenter.prevent
+        draggable="false"
+      >
+        Backlog
+        <div class="drop-zone" draggable="false">
+          <div class="drag-el" v-for="ticket in list_backlog" :key="ticket.id">
+            <ticketBoxVue
+              :ticket="ticket"
+              draggable="true"
+              @dragstart="startDrag($event, ticket)"
+              @clicked="clickedEmit(ticket.id)"
+            />
+          </div>
+        </div>
+        <a @click="initCreate('Backlog')"><i class="fa-solid fa-plus"></i></a>
+      </div>
+
+      <div
+        class="column has-background-primary-light mx-5"
+        :style="{ height: '600px' }"
+        @drop="onDrop($event, 'Open')"
+        @dragover.prevent
+        @dragenter.prevent
+        draggable="false"
+      >
+        Open
+        <div class="drop-zone" draggable="false">
+          <div class="drag-el" v-for="ticket in list_open" :key="ticket.id">
+            <ticketBoxVue
+              :ticket="ticket"
+              draggable="true"
+              @dragstart="startDrag($event, ticket)"
+              @clicked="clickedEmit(ticket.id)"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="column has-background-primary-light mx-5 overflow=auto"
+        :style="{ height: '600px' }"
+        @drop="onDrop($event, 'In Progress')"
+        @dragover.prevent
+        @dragenter.prevent
+        draggable="false"
+      >
+        In Progress
+        <div class="drop-zone" draggable="false">
+          <div class="drag-el" v-for="ticket in list_ip" :key="ticket.id">
+            <ticketBoxVue
+              :ticket="ticket"
+              draggable="true"
+              @dragstart="startDrag($event, ticket)"
+              @clicked="clickedEmit(ticket.id)"
+            />
+            <!-- <div class="box"  draggable=true @dragstart="startDrag($event,ticket)">
+                        {{ticket.title}}
+                    </div> -->
+          </div>
+        </div>
+      </div>
