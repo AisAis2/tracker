@@ -54,6 +54,7 @@ export default {
         document.title = 'Log In | IT'
     },
     methods:{
+
         async submitForm(){
             axios.defaults.headers.common['Authorization'] = ""
 
@@ -69,12 +70,14 @@ export default {
                     const token = response.data.auth_token
                     this.$store.commit('setToken',token)
 
-                    axios.defaults.headers.common["Authorization"] = 'Token '+token
+                    axios.defaults.headers.common["Authorization"] = 'Token'+' '+token
                     localStorage.setItem('token', token)
-                    console.log(response.data)
+                    this.getUser()
+
                     const toPath = this.$route.query.to || '/'
-                    console.log(axios.defaults.headers)
+
                     this.$router.push(toPath)
+
                 })
                 .catch(error =>{
                     if(error.response){
@@ -86,7 +89,19 @@ export default {
                             console.log(JSON.stringify(error))
                         }
                 })
-        }
+        },
+        async getUser(){
+            await axios
+                .get('/api/v1/users/me')
+                .then(response=>{
+                    const user=response.data
+                    this.$store.commit('setUser',user)
+
+                })
+                .catch(error=>{
+                    console.log(error)
+                })
+        },
 
     }
 }

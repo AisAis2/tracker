@@ -56,7 +56,6 @@ export default {
                 .get("/api/v1/ticket/all/")
                 .then((response) => {
                     this.ticketList = response.data;
-                    console.log('sucess')
                     });
                 
         }

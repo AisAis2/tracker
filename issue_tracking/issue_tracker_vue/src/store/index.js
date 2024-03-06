@@ -5,6 +5,7 @@ export default createStore({
     isAuthenticated:false,
     token:'',
     project_filter:'General',
+    user:'',
   },
   getters: {
   },
@@ -27,6 +28,14 @@ export default createStore({
       state.token = ''
       state.isAuthenticated = false
     },
+    setUser(state,user){
+      state.user=user
+      localStorage.setItem('user',JSON.stringify(user))
+    },
+    removeUser(state){
+      state.user=''
+      localStorage.removeItem('user')
+    }
 
   },
   actions: {

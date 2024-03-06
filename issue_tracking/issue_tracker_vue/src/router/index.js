@@ -12,6 +12,7 @@ import Ticket from '../views/Ticket.vue'
 import Kanban from '../views/Kanban.vue'
 import CreateTicket from '../views/CreateTicket.vue'
 import TicketList from '../views/TicketList'
+import UsersList from '../views/Users.vue'
 const routes = [
   {
     path: '/',
@@ -57,14 +58,14 @@ const routes = [
       requireLogin:true
     }
   },
-  {
-    path:'/project/create/',
-    name: 'CreateProject',
-    component: CreateProject,
-    meta:{
-      requireLogin:true
-    }
-  },
+  // {
+  //   path:'/project/create/',
+  //   name: 'CreateProject',
+  //   component: CreateProject,
+  //   meta:{
+  //     requireLogin:true
+  //   }
+  // },
   {
     path:'/ticket/:id/',
     name: 'Ticket',
@@ -73,7 +74,10 @@ const routes = [
   {
     path:'/kanban',
     name: 'Kanban',
-    component: Kanban
+    component: Kanban,
+    meta:{
+      requireLogin:true
+    }
   },
   {
     path:'/ticket/create',
@@ -83,9 +87,16 @@ const routes = [
   {
     path:'/ticket/all',
     name: 'TicketList',
-    component: TicketList
+    component: TicketList,
+    meta:{
+      requireLogin:true
+    }
   },
-
+  {
+    path:'/users/all',
+    name: 'Users',
+    component: UsersList
+  },
 ]
 
 const router = createRouter({
@@ -93,11 +104,11 @@ const router = createRouter({
   routes
 })
 
-router.beforeEach((to,from,next)=>{
-  if(to.matched.some(record=>record.meta.requireLogin) && !store.state.isAuthenticated){
-    next({name: 'Login', query:{to:to.path}});
-  } else{
-    next()
-  }
-})
+// router.beforeEach((to,from,next)=>{
+//   if(to.matched.some(record=>record.meta.requireLogin) && !store.state.isAuthenticated){
+//     next({name: 'Login', query:{to:to.path}});
+//   } else{
+//     next()
+//   }
+// })
 export default router

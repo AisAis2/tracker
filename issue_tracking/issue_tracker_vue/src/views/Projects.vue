@@ -1,6 +1,6 @@
 <template>
     <div class="projects">
-    <table class="table">
+    <table class="table is-fullwidth">
         <thead>
             <tr>
                 <th class="px-6">Project Name</th>
@@ -13,7 +13,9 @@
             <tr v-for="(project,index) in projectsList"
             v-bind:key="project.id">
                 <td class="px-6"><router-link :to="{path:'/project/'+project.id}">{{project.name}}</router-link></td>
-                <td class="px-6">Creator</td>
+                <td class="px-6" v-if="!project.submitter">Creator</td>
+
+                <td class="px-6" v-else>{{project.submitter.username}}</td>
                 <td class="px-6">Member</td>
                 <td class="px-6">
                     <button class="button is-outlined is-small is-info mr-2" data-target="modal-ter" aria-haspopup='true' @click='initEditProject(index)'>

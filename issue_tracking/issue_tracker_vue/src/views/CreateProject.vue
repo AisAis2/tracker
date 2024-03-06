@@ -81,7 +81,6 @@ export default {
             axios
                 .get('/api/v1/users/')
                 .then(response=>{
-                    console.log(response)
                     this.selecList = response.data
                 })
                 .catch(error =>{

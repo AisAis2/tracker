@@ -9,17 +9,17 @@ from .serializers import TicketSerializer
 from project.models import Project
 from project.serializers import ProjectSerializer
 
-class ticketsList(APIView):
-    def get(self,request,format = None):
-        # print('-----------------')
-        # print('-----------------')
-        # print('get requst data below')
-        # print(request)
-        # print('get requst data above')
-        tickets = Ticket.objects.all()
+class ticketsProject(APIView):
+    def get(self,request,id,format = None):
+        p = Project.objects.get(id=id)
+        tickets = Ticket.objects.filter(project=p)
         serializer = TicketSerializer(tickets, many =True)
         return Response(serializer.data)
-
+class ticketsList(APIView):
+    def get(self,request,format = None):
+        tickets = Ticket.objects.all()  
+        serializer = TicketSerializer(tickets, many =True)
+        return Response(serializer.data)
 class ticketView(APIView):
     def get_object(self,id):
         try:
@@ -32,21 +32,19 @@ class ticketView(APIView):
         return Response(serializer.data)
     def post(self,request):
         ticket  = request.data
-        print(ticket)
         serializer = TicketSerializer(data = ticket)
         if serializer.is_valid():
             serializer.save()
             return Response({'message':'Succesfully created new ticket','status':'HTTP_500_OK'})
-        print(serializer.errors)
         return Response({'message':'Error when creating ticket','status':'HTTP_500_ERROR'}) 
+    
     def put(self,request,id, formate=None):
         ticket=self.get_object(id)
         serializer = TicketSerializer(ticket, data=request.data,partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response({'message':'Succesfully updated the ticket','status':'HTTP_200_OK'})
-        
-        return Response({'message':'Error when creating ticket','status':'HTTP_500_ERROR'}) 
+        return Response({'message':'Error when updating ticket','status':'HTTP_500_ERROR'}) 
 
     def delete(self,request,id):
         ticket = self.get_object(id)

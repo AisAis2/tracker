@@ -41,6 +41,7 @@ export default {
         }
     },
     beforeMount(){  
+        this.getProject(),
         this.getTickets()
     },
     methods:{
@@ -49,7 +50,7 @@ export default {
             const id = this.$route.params.id
             
             await axios
-                .get(`/api/v1/project/${id}`)
+                .get(`/api/v1/project/${id}/`)
                 .then(response => {
                     console.log('project')
                     this.project = response.data

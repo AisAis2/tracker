@@ -1,18 +1,17 @@
 <template>
   <div class="kanban columns is-multiline">
-    <div class="column is-12 pl-5">
+    <div class="column is-12 pl-5 is-flex-direction-column">
       <div>Project Filter</div>
-      <div class="select is-primary">
-          <select v-model='project_filter'
-                  @change = "filterTicketList()"
-          >
-            <option>General</option>
-            <option
-            v-for='project in projectList'
-            :key = 'project.name'
-            >{{project.name}}</option>
-          </select>
-      </div>
+        <div class="select is-primary">
+            <select v-model='project_filter' @change = "filterTicketList()">
+              <option>General</option>
+              <option
+              v-for='project in projectList'
+              :key = 'project.name'
+              >{{project.name}}</option>
+            </select>
+        </div>
+        <button class="button is-white" @click="createNewProject=!createNewProject"><i class="fa-solid fa-plus"></i></button>
     </div>
 
     
@@ -47,7 +46,6 @@
             class="delete"
             aria-label="close"
             @click="editTicket = false"
-            
           ></button>
         </header>
 
@@ -131,6 +129,12 @@
                     </option>
                 </select>
               </div>
+            </div>
+          </div>
+          <div class="field">
+            <label class="is-size-5 has-text-weight-bold">Submitter</label>
+            <div class="control" v-if="editedTicket.submitter ">
+              {{editedTicket.submitter.username}}
             </div>
           </div>
 
@@ -218,7 +222,46 @@
         </footer>
       </div>
     </div>
-    <!-- Delete Modal END -->
+    <!-- Create Project Modal -->
+    <div :class="{ 'is-active': createNewProject, modal: true }" id="modal-tic">
+      <div class="modal-background"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Create Project</p>
+          <button
+            class="delete"
+            aria-label="close"
+            @click="createNewProject = false"
+          ></button>
+        </header>
+        <section class="modal-card-body">
+          <div class="field">
+            <div class="my-2 is-success is-rounded">
+              <label class="is-size-5 has-text-weight-bold">Title</label>
+              <div class="control">
+                <input type="text" class="input" v-model='tmpProject.name'>
+              </div>
+
+            </div>
+          </div>
+          <div class="field">
+            <div class="my-2 is-success is-rounded">
+              <label class="is-size-5 has-text-weight-bold">Description</label>
+              <div class="control">
+                <textarea type="text" class="textarea" v-model='tmpProject.description'></textarea>
+              </div>
+              
+            </div>
+          </div>
+        </section>
+        <footer class="modal-card-foot">
+          <button class="button is-success" @click="createProject()">
+            Create
+          </button>
+          <button class="button" @click="createNewProject = false">Cancel</button>
+        </footer>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -238,7 +281,7 @@ export default {
       editTitle: false,
       editDesc: false,
       createTicket: false,
-      createdTicket: { title: "", description: "", priority: "", status: "" },
+      createdTicket: { title: "", description: "", priority: "", status: "",submitter:""},
       deleteModal: false,
       deleted_id:'',
       cols:['Backlog','Open','In Progress','Done'],
@@ -246,6 +289,8 @@ export default {
       ticketProject:'',
       project_filter:'General',
       filtered_ticket_list:[],
+      createNewProject:false,
+      tmpProject:{'name':'','description':'','submitter':''},
     };
   },
   components: {
@@ -255,7 +300,8 @@ export default {
   mounted() {
     this.getTicketList(),
     this.getprojectList(),
-    this.getPfilter()
+    this.getPfilter(),
+    alert('test')
   },
   computed: {
     ll(){
@@ -293,6 +339,18 @@ export default {
     }
   },
   methods: {
+      async createProject(){
+        this.tmpProject.submitter = JSON.parse(localStorage.getItem('user'))
+        await axios
+                  .post('api/v1/project/create/',this.tmpProject)
+                  .then((response)=>{
+                    console.log(response)
+                    this.$router.go('/kanban')
+                  })
+                  this.tmpProject.title=''
+                  this.tmpProject.description=''
+                  this.tmpProject.submitter=''
+      },          
     getPfilter(){
       if(localStorage.getItem('project_filter')===null){
         this.project_filter = this.$store.state.project_filter
@@ -306,6 +364,7 @@ export default {
       id= Number(id)
       this.editTicket = true;
       this.editedTicket = this.ticketList.find((x) => x.id === id);
+      console.log(this.editedTicket)
     },
     async getTicketList() {
       await axios
@@ -338,7 +397,9 @@ export default {
           item.status = status;
           axios
             .put(`/api/v1/ticket/${item.id}/update`, item)
-            .then((response) => {});
+            .then((response) => {
+              console.log(response.data)
+            });
         }
       } catch (error) {
         console.error(error);
@@ -362,14 +423,19 @@ export default {
       this.ticketProject='';
        this.$router.push("/kanban");
       },
+
+
+
     async createTicketF() {
       this.createdTicket.project = this.projectList.find((p)=>p.name===this.project_filter)
+      this.createdTicket.submitter=JSON.parse(localStorage.getItem('user'))
       await axios
         .post(`/api/v1/ticket/create/`, this.createdTicket) //clear fields in created ticket after done
         .then((response) => {
           console.log(response);
           this.createTicket = false;
           this.$router.go("/kanban");
+
         });
 
       // for(const key of Object.entries(this.createdTicket)){
