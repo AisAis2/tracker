@@ -300,8 +300,7 @@ export default {
   mounted() {
     this.getTicketList(),
     this.getprojectList(),
-    this.getPfilter(),
-    alert('test')
+    this.getPfilter()
   },
   computed: {
     ll(){
