@@ -14,7 +14,8 @@
             <tr v-for="(ticket,index) in ticketList"
             v-bind:key="ticket.id">
                 <td class="px-6"><router-link :to="{path:'/ticket/'+ticket.id}">{{ticket.title}}</router-link></td>
-                <td class="px-6">Creator</td>
+                <td class="px-6" v-if="ticket.submitter">{{ticket.submitter.username}}</td>
+                <td class="px-6" v-else>Admin</td>
                 <td class="px-6" v-if='ticket.project'>{{ticket.project.name}}</td>
                 <td class="px-6" v-else></td>
                 <td class="px-6">

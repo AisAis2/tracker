@@ -138,3 +138,4 @@ STEP for issue_tracker:
 39) In props we need to define data type passed from parent.
 40) Probably, it is required to override create() to deal with nested serializers.
 41) To use djoser endpoints it is required to modify settings.py
+42) Permissions better to be implemented on backend

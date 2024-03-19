@@ -1,6 +1,8 @@
 .DS_Store
 node_modules
 /dist
+__pycache__/
+*.py[cod]
 
 
 # local env files
@@ -23,3 +25,4 @@ pnpm-debug.log*
 *.sw?
 *.sqlite3
 .env
+*sqlite3
