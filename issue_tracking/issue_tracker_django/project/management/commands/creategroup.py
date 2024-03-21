@@ -41,4 +41,4 @@ class Command(BaseCommand):
                 admin_group.permissions.add(p)
                 manager_group.permissions.add(p)
         u  = User.objects.get(username = 'Aisultan')
-        print(u.has_perm('project.delete_project'))
+        print(u.has_perm('project.add_project'))
