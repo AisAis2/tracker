@@ -7,6 +7,7 @@ urlpatterns = [
     path('project/<int:id>/',views.projectView.as_view()),
     path('project/create/',views.projectView.as_view()),
     path('project/<int:id>/delete',views.projectView.as_view()),
-    path('project/<int:id>/edit',views.projectView.as_view())
+    path('project/<int:id>/edit',views.projectView.as_view()),
+    path('group/add/',views.addNewUserToGroup)
 
 ]

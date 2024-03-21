@@ -55,7 +55,7 @@ export default {
         }
     },
     methods:{
-        submitForm(){
+        async submitForm(){
             this.errors = []//reset if sent multiple times
             if(this.username ===''){
                 this.errors.push('The username is missing')
@@ -71,8 +71,10 @@ export default {
                     username: this.username,
                     password: this.password,
                 }
-                axios
+                
+                await axios
                     .post('/api/v1/users/',formData)//sending data to available endpoint
+                    this.assignGroupBackend(formData)
                     .then(response =>{
                         this.$router.push('/login')//redirect to log in page    
                         }
@@ -83,6 +85,19 @@ export default {
                         }
                     })
             }
+        },
+        async assignGroupBackend(formD){
+   
+            await axios
+                  .post('/api/v1/group/add/',formD)
+                  .then(response =>{
+                    console.log('request sent')
+                  })
+                .catch(error=>{
+                    if(error.response){
+                        console.log('ERROR:'+error.response)
+                    }
+                })
         }
     }
 }

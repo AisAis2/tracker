@@ -428,6 +428,7 @@ export default {
     async createTicketF() {
       this.createdTicket.project = this.projectList.find((p)=>p.name===this.project_filter)
       this.createdTicket.submitter=JSON.parse(localStorage.getItem('user'))
+      
       await axios
         .post(`/api/v1/ticket/create/`, this.createdTicket) //clear fields in created ticket after done
         .then((response) => {

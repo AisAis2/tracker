@@ -1,6 +1,7 @@
 from django.http import Http404
-
+from django.contrib.auth.models import User, Group
 from rest_framework.views import APIView
+from django.http import HttpResponse
 from rest_framework.response import Response
 
 from .models import Project
@@ -41,3 +42,18 @@ class projectView(APIView):
         project = Project.objects.filter(id=id)
         project.delete()
         return Response({"status":"HTTP_204_NO_CONTENT"})
+
+
+def addNewUserToGroup(self):
+    print('Adding the '+requst.data['username']+'to cuser Group')
+    if request.method =='POST':
+        try:
+            u = User.objects.get(username = request.data['username'])
+        except User.DoesNotExist:
+            raise Http404
+        g = Group.object.get(name = 'cuser')
+        g.user_set.add(u)
+        return HttpResponse('User Succesfull added to a group')
+    return Http404
+
+    
