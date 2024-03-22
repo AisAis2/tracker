@@ -44,7 +44,7 @@
               <router-link to="/ticket/all" class="navbar-item  p-4 is-family-monospace ml-6">Tickets</router-link>
               <router-link to="/projects/" class="navbar-item  is-family-monospace p-4 ml-6">Projects</router-link>
           </div>
-          <div class="column is-10" :style="{'height':'1000px','overflow':'auto'}">
+          <div class="column is-10 has-background-primary-light" :style="{'height':'1000px','overflow':'auto'}">
             <router-view/>
 
           </div>  

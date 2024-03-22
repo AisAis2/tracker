@@ -1,24 +1,16 @@
 <template>
     <div class="page-my-account">
-        <div class="columns is-multiline">
-            <div class="column is-12">
-                <h1 class="title">My Account</h1>
-            </div>
-            <div class="column is-12">
-                <label class="is-size-4 has-text-weight-bold">Username</label>
-                <div class="is-size-5">{{user.username}}</div>
-            </div>
-            <div class="column is-12">
-                <label class="is-size-4 has-text-weight-bold">Email</label>
-                <div class="is-size-5" v-if="user.email">{{user.email}}</div>
-                <div class="is-size-5" v-else>No Email</div>
-            </div>
-            <!-- <div class="column is-12">
-                <label class="is-size-4 has-text-weight-bold">Role</label>
-                <div class="is-size-5">{{user.username}}</div>
-            </div> -->
-            <div class="column is-12">
-                <button @click="logout()" class="button is-danger">Log out</button>
+        <div class="is-flex is-justify-content-center">
+            <div class="box" :style="{'width':'400px'}">
+                <div class="field">
+                    <label for="" class="label">Name</label>
+                    <div class="control">{{ user.username }}</div>
+                </div>
+                <div class="field">
+                    <label for="" class="label">Email</label>
+                    <div class="control" v-if="user.email">{{ user.email }}</div>
+                    <div class="control" v-else>{{ user.username }}@tracker.com</div>
+                </div>
             </div>
         </div>
     </div>
