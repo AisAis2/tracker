@@ -1,11 +1,12 @@
 <template>
-    <div class="single_project">
+    <div class="is-flex">
         <div class="columns">
-            <div class="column">
+            <div class="column is-4">
                         <h1 class="title">{{project.name}}</h1>
                         <label class="is-size-4 has-text-weight-semibold">Description</label>
-                        <p v-if="project.description" class="py-5">{{project.description}}s</p>
+                        <p v-if="project.description" class="py-5">{{project.description}}</p>
                         <p v-else class="py-5 has-text-weight-light">Description is missing</p>
+                        <p v-if="project.submitter" class="py-4">{{project.submitter.username}}</p>
                         <button class="button is-primary">
                             <router-link to="/projects">
                             <span>Back to Projects</span></router-link>
@@ -13,7 +14,7 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th>Tilte</th>
+                                    <th>Title</th>
                                     <th>Description</th>
                                 </tr>
                             </thead>
@@ -26,6 +27,7 @@
                             </tbody>
                         </table>
             </div>
+
         </div>
 
     </div>

@@ -1,7 +1,7 @@
 <template>
             <div class="column has-background-primary-light mx-5" :style="{'height':'650px','overflow':'auto'}">
-                <div class="container" :stlye="{'position':'sticky'}">
-                    {{status}}
+                <div class="container is-family-monospace" :stlye="{'position':'sticky'}">
+                    {{status}}({{ ticket_list.length }})
                     <a @click="$emit('initCreateTicket',status)"><i class="fa-solid fa-plus"></i></a>
                     
                 </div>

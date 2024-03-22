@@ -40,5 +40,22 @@ class Command(BaseCommand):
                 cuser_group.permissions.add(p)
                 admin_group.permissions.add(p)
                 manager_group.permissions.add(p)
+       
+        for p in ticket_permission:
+            if p.codename == 'delete_ticket':
+                admin_group.permissions.add(p)
+
+            elif p.codename == 'change_ticket':
+                admin_group.permissions.add(p)
+                manager_group.permissions.add(p)
+                cuser_group.permissions.add(p)
+            elif p.codename =='add_ticket':
+                admin_group.permissions.add(p)
+                manager_group.permissions.add(p)
+                cuser_group.permissions.add(p)
+            else:
+                cuser_group.permissions.add(p)
+                admin_group.permissions.add(p)
+                manager_group.permissions.add(p)
         u  = User.objects.get(username = 'Aisultan')
-        print(u.has_perm('project.add_project'))
+        print(u.has_perm('project.view_project'))

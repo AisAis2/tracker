@@ -1,13 +1,14 @@
 <template>
   <div class="kanban columns is-multiline">
     <div class="column is-12 pl-5 is-flex-direction-column">
-      <div>Project Filter</div>
+      <div class="is-family-monospace">Project Filter</div>
         <div class="select is-primary">
-            <select v-model='project_filter' @change = "filterTicketList()">
-              <option>General</option>
+            <select v-model='project_filter' @change = "filterTicketList()" class="is-family-monospace">
+              <option >General</option>
               <option
               v-for='project in projectList'
               :key = 'project.name'
+              :class="{'is-family-monospace':'true'}"
               >{{project.name}}</option>
             </select>
         </div>
@@ -227,7 +228,7 @@
       <div class="modal-background"></div>
       <div class="modal-card">
         <header class="modal-card-head">
-          <p class="modal-card-title">Create Project</p>
+          <p class="modal-card-title is-family-monospace">Create Project</p>
           <button
             class="delete"
             aria-label="close"

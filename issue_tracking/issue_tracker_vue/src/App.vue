@@ -15,9 +15,6 @@
 
           <div class="navbar-menu" id="navbar-menu" v-bind:class="{'is-active': showMobileMenu}">
             <div class="navbar-end">
-              <router-link to="/projects" class="navbar-item">Projects</router-link>
-              <router-link to="/ticket/all" class="navbar-item">Tickets</router-link>
-              <router-link to='/kanban' class="navbar-item">Kanban</router-link>
               <!-- <router-link to='/project/create/' class="navbar-item">Create Project</router-link> -->
               <div class="navbar-item">
                 <div class="buttons">
@@ -31,7 +28,7 @@
                   <template v-else>
                     <router-link to='/my-account' class="button is-light">
                     <span class="icon"><i class="fa-solid fa-user"></i></span>
-                      <span>My Account</span>
+                      <span class="is-family-monospace">My Account</span>
                     </router-link>
                   </template>
 
@@ -40,9 +37,23 @@
             </div>
           </div>
         </nav>
-        <section class="section pt-1 is-link" :style="{'height':'900px','overflow':'auto'}">
+        <div class="columns is-gapless" >
+          <div class="column is-2 has-background-primary-on-scheme " :style="{'height':'1000px','position':'sticky'}">
+              <router-link to='/kanban' class="navbar-item p-4 is-family-monospace ml-6">Kanban</router-link>
+
+              <router-link to="/ticket/all" class="navbar-item  p-4 is-family-monospace ml-6">Tickets</router-link>
+              <router-link to="/projects/" class="navbar-item  is-family-monospace p-4 ml-6">Projects</router-link>
+          </div>
+          <div class="column is-10" :style="{'height':'1000px','overflow':'auto'}">
             <router-view/>
-        </section>
+
+          </div>  
+        </div>
+        <!-- <section class="section pt-1 is-link" :style="{'height':'900px','overflow':'auto'}">
+        </section> -->
+        <!-- <section class="section">
+          test
+        </section> -->
       <footer class="footer">
     <p class="has-text-centered">Copyright (c) 2023</p>
   </footer>
