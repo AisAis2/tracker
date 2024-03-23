@@ -1,18 +1,18 @@
 <template>
-    <div :class="{'box':true, 'my-3':true, bgColor:true }" :style="{'height':'110px','overflow':'hidden'}">
-        <div class="columns is-flex">
-            <div class="column is-10">
-                <span class="is-size-6 has-text-weight-semibold is-align-content-center is-clipped is-family-monospace">{{ticket.title}}</span>
+    <div :class="{'box':true, 'my-3':true, bgColor:true }" :style="{'height':'110px','overflow':'hidden'}" >
+        <div class="is-flex is-flex-direction-column ">
+            <div class="is-flex is-flex-direction-row" :style="{'height':'50px','overflow':'hidden'}">
+                <div class="is-flex" :style="{'width':'200px'}">
+                    <span class="is-size-6 has-text-weight-semibold is-align-content-center is-clipped is-family-monospace">{{ticket.title}}</span>
+                </div>
+                    <div class="is-flex ml-5">
+                        <a  @click="emitClick()"><span class=" is-size-7"><i class="fa-solid fa-square-plus"></i></span></a>
+                    </div>
             </div>
-            <div class="column">
-                <a  @click="emitClick()"><span class=" is-size-7 is-align-content-center "><i class="fa-solid fa-square-plus"></i></span></a>
-            </div>
-        </div>
-        <div class="columns">
-            <div class="column">
-                <span class="is-size-7 has-text-weight-bold is-family-monospace" :class="{'has-text-danger':textColor()[0],'has-text-warning':textColor()[1],'has-text-info':textColor()[2]}">
-                {{ ticket.priority }}
-
+            <div class="is-flex is-flex-direction-row ">
+                <span class="is-size-7 has-text-weight-bold is-family-monospace" :class="{'has-text-danger':textColor()[0],'has-text-warning':textColor()[1],'has-text-info':textColor()[2]}"
+               >
+                    {{ ticket.priority }}
                 </span>
             </div>
         </div>

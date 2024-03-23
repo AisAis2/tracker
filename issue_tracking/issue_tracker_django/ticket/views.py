@@ -8,6 +8,7 @@ from .models import Ticket
 from .serializers import TicketSerializer
 from project.models import Project
 from project.serializers import ProjectSerializer
+from project.permissions import TicketPermissions
 
 class ticketsProject(APIView):
     def get(self,request,id,format = None):
@@ -21,6 +22,7 @@ class ticketsList(APIView):
         serializer = TicketSerializer(tickets, many =True)
         return Response(serializer.data)
 class ticketView(APIView):
+    permission_classes=[TicketPermissions]
     def get_object(self,id):
         try:
             return Ticket.objects.get(id=id)

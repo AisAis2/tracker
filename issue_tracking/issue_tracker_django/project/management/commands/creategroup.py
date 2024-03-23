@@ -57,5 +57,5 @@ class Command(BaseCommand):
                 cuser_group.permissions.add(p)
                 admin_group.permissions.add(p)
                 manager_group.permissions.add(p)
-        u  = User.objects.get(username = 'Aisultan')
-        print(u.has_perm('project.view_project'))
+        # u  = User.objects.get(username = 'Aisultan')
+        # print(u.has_perm('ticket.change_ticket'))

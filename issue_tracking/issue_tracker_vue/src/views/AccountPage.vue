@@ -11,6 +11,9 @@
                     <div class="control" v-if="user.email">{{ user.email }}</div>
                     <div class="control" v-else>{{ user.username }}@tracker.com</div>
                 </div>
+                <div class="field">
+                    <div class="contro"><button class="button is-danger" @click='logout()'>Log Out</button></div>
+                </div>
             </div>
         </div>
     </div>

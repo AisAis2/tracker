@@ -1,8 +1,8 @@
 <template>
-            <div class="column has-background-primary-light mx-5" :style="{'height':'650px','overflow':'auto'}">
-                <div class="container is-family-monospace" :stlye="{'position':'sticky'}">
+            <div class="column has-background-info-light mx-5" :style="{'height':'650px','overflow':'auto'}">
+                <div class="is-flex is-family-monospace" :stlye="{'position':'sticky'}">
                     {{status}}({{ ticket_list.length }})
-                    <a @click="$emit('initCreateTicket',status)"><span class="has-background-primary-light"><i class="fa-solid fa-plus"></i></span></a>
+                    <a @click="$emit('initCreateTicket',status)"><span class="has-background-info-light"><i class="fa-solid fa-plus"></i></span></a>
                     
                 </div>
                 <div class="drop-zone" draggable="false">
