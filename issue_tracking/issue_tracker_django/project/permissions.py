@@ -35,6 +35,8 @@ class TicketPermissions(permissions.BasePermission):
             return True
         if request.user.has_perm('ticket.change_ticket') and request.method =='PUT': #and obj['submitter']['id']== request.user.id:#how to pass ticket object? I pass request[] obj, serializer required? 
             return True
+        if request.user.has_perm('ticket.delete_ticket') and request.method == 'DELETE':
+            return True
         if request.user.is_staff:
             return True
         return False

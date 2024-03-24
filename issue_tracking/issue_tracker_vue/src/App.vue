@@ -30,6 +30,7 @@
                     <span class="icon"><i class="fa-solid fa-user"></i></span>
                       <span class="is-family-monospace">My Account</span>
                     </router-link>
+   
                   </template>
 
                 </div>
@@ -43,22 +44,24 @@
 
               <router-link to="/ticket/all" class="navbar-item  p-4 is-family-monospace ml-6">Tickets</router-link>
               <router-link to="/projects/" class="navbar-item  is-family-monospace p-4 ml-6">Projects</router-link>
-          </div>
+          
+
+            </div>
           <div class="column is-10" :style="{'height':'1000px','overflow':'auto'}">
             <router-view/>
 
           </div>  
         </div>
-        <!-- <section class="section pt-1 is-link" :style="{'height':'900px','overflow':'auto'}">
-        </section> -->
-        <!-- <section class="section">
-          test
-        </section> -->
       <footer class="footer">
     <p class="has-text-centered">Copyright (c) 2023</p>
   </footer>
 
     </div>
+    <ToastMessage
+    v-if="errMsg"
+    :message="errMsg"
+    />
+
   </div>
 
 
@@ -69,10 +72,14 @@
 
 <script>
 import axios from 'axios'
+import ToastMessage from './/components/ToastMessage.vue';
+import { mapState } from 'vuex';
 export default {
   data(){
     return {
       showMobileMenu:false,
+      errorMsg:'test',
+      opacity:1,          
     }
   },
   beforeCreate(){
@@ -83,8 +90,19 @@ export default {
     } else {
       axios.defaults.headers.common['Authorization'] = ""
     }
-  }
+  },
+components:{
+  ToastMessage
+},
+computed:mapState({
+  errMsg:state=>state.errorMsg
+}),
+methods:{
+
 }
+
+}
+  
 </script>
 
 

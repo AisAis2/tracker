@@ -6,6 +6,7 @@ export default createStore({
     token:'',
     project_filter:'General',
     user:'',
+    errorMsg:'',
   },
   getters: {
   },
@@ -19,6 +20,10 @@ export default createStore({
         state.token = ''
         state.isAuthenticated = false
       }
+    },
+    async newErrMsg(state,msg){
+      state.errorMsg=msg;
+      setTimeout(()=>{state.errorMsg=''},4000)
     },
     setToken(state,token){
       state.token = token

@@ -32,6 +32,7 @@ export default {
     mounted(){
     },
     methods:{
+ 
         startDrag(evt, item) {
             if (item.status) {
                 evt.dataTransfer.dropEffect = "move";

@@ -1,6 +1,6 @@
 <template>
     <div class="projects">
-    <table class="table is-fullwidth">
+    <table class="table">
         <thead>
             <tr>
                 <th class="px-6">Project Name</th>

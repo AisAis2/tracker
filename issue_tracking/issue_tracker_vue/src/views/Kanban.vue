@@ -14,8 +14,6 @@
         </div>
         <span class="has-background-primary-light"><button class="button is-white" @click="createNewProject=!createNewProject"><i class="fa-solid fa-plus"></i></button></span>
     </div>
-
-    
       <kanbancolumnVue
       v-for='(status,counter) in cols'
       :key =status
@@ -26,7 +24,8 @@
       @dragenter.prevent 
       draggable="false"
       @ticketClick='clickedEmit'
-      @initCreateTicket='initCreate'/>
+      @initCreateTicket='initCreate'
+      />
 
 
 <!-- Delete Bin -->
@@ -452,12 +451,31 @@ export default {
       this.deleted_id = Number(event.dataTransfer.getData("itemID"));
       this.deleteModal = true;
     },
+    emitLog(a){
+      console.log('Kanban Listening')
+    },
     deleteTicket() {
         axios
             .delete(`/api/v1/ticket/${this.deleted_id}/delete`)
             .then(response=>{
                 console.log(response)
                 this.$router.go('/kanban')
+            })
+            .catch(error=>{
+              if(error.response){
+                // console.log(error.response.data.detail);
+                // console.log(error.response.status);
+                // console.log(error.response.headers);
+                this.deleteModal=false;
+                this.$store.commit('newErrMsg',error.response.data.detail)
+              }
+              else if(error.request){
+                console.log(error.request)
+              }
+              else{
+                console.log('Error',error.message)
+              }
+              console.log(error.config)
             })
     },
     async getprojectList(){
