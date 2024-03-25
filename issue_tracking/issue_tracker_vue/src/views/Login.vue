@@ -82,12 +82,14 @@ export default {
                 .catch(error =>{
                     if(error.response){
                         for(const property in error.response.data){
-                            this.errors.push(`${property}: ${error.response.data[property]}`)
+                            this.errors.push(`${error.response.data[property]}`)
+                            console.log(`${error.response.data[property]}`)
                         } 
                     } else {
                             this.errors.push('Something went wrong. Please try again')
                             console.log(JSON.stringify(error))
                         }
+                    setTimeout(()=>{this.errors=[]},3000)
                 })
         },
         async getUser(){

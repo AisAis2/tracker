@@ -1,8 +1,8 @@
 <template>
   <div class="kanban columns is-multiline">
-    <div class="column is-12 pl-5 is-flex-direction-column">
+    <div class="column is-12 pl-5 is-flex-direction-column mx-3">
       <div class="is-family-monospace">Project Filter</div>
-        <div class="select is-primary">
+        <div class="select is-info">
             <select v-model='project_filter' @change = "filterTicketList()" class="is-family-monospace">
               <option >General</option>
               <option
@@ -12,7 +12,7 @@
               >{{project.name}}</option>
             </select>
         </div>
-        <span class="has-background-primary-light"><button class="button is-white" @click="createNewProject=!createNewProject"><i class="fa-solid fa-plus"></i></button></span>
+        <span class="has-background-primary-light"><button class="button is-info is-light" @click="createNewProject=!createNewProject"><i class="fa-solid fa-plus"></i></button></span>
     </div>
       <kanbancolumnVue
       v-for='(status,counter) in cols'
@@ -29,17 +29,12 @@
 
 
 <!-- Delete Bin -->
-    <a
-      class="is-size-1 column is-12 pl-5"
-      @drop="onDropDelete($event)"
-      @dragover.prevent
-      @dragenter.prevent
-      ><i class="fa-solid fa-trash"></i
-    ></a>
+
     <!-- Update Modal -->
-    <div :class="{ 'is-active': editTicket, modal: true }" id="modal-del">
+    <div :class="{ 'is-active': editTicket, modal: true}" id="modal-del">
       <div class="modal-background"></div>
-      <div class="modal-card">
+      <div class="modal-card" >
+
         <header class="modal-card-head">
           <p class="modal-card-title">Edit Ticket</p>
           <button
@@ -81,7 +76,7 @@
           <div class="field">
             <label class="is-size-5 has-text-weight-bold">Type</label>
             <div class="control">
-              <div class="select my-2 is-success is-rounded">
+              <div class="select my-2 is-info is-rounded">
                 <select v-if="!editedTicket.type" v-model="editedTicket.type">
                   <option v-for="select in selectList" :key="select">
                     {{ select }}
@@ -99,7 +94,7 @@
           <div class="field">
             <label class="is-size-5 has-text-weight-bold">Priority</label>
             <div class="control">
-              <div class="select my-2 is-success is-rounded">
+              <div class="select my-2 is-info is-rounded">
                 <select
                   v-if="!editedTicket.priority"
                   v-model="editedTicket.priority"
@@ -121,7 +116,7 @@
           <div class="field">
             <label class="is-size-5 has-text-weight-bold">Project</label>
             <div class="control">
-              <div class="select my-2 is-success is-rounded">
+              <div class="select my-2 is-info is-rounded" >
                 <select  v-model='ticketProject'>
                     <option v-if="editedTicket.project" value=''>{{editedTicket.project.name}}</option>
                     <option v-for="select in project_name_list" :key="select">
@@ -140,14 +135,14 @@
 
         </section>
         <footer class="modal-card-foot">
-          <button class="button is-primary" @click="toEditTicket(editedTicket)">
+          <button class="button is-info" @click="toEditTicket(editedTicket)">
             Save
           </button>
           <button class="button" @click="editTicket = false">Cancel</button>
         </footer>
       </div>
     </div>
-    <!-- Create Modal -->
+    <!-- Create Modal Ticket -->
     <div :class="{ 'is-active': createTicket, modal: true }" id="modal-tic">
       <div class="modal-background"></div>
       <div class="modal-card">
@@ -202,9 +197,9 @@
 
 
     <!-- Delete Modal -->
-    <div :class="{ 'is-active': deleteModal, modal: true }" id="modal-tic">
+    <div :class="{ 'is-active': deleteModal, modal: true }" id="modal-tic" >
       <div class="modal-background"></div>
-      <div class="modal-card">
+      <div class="modal-card" :style="{'width':'350px'}">
         <header class="modal-card-head">
           <p class="modal-card-title">Delete Ticket</p>
           <button
@@ -263,6 +258,15 @@
       </div>
     </div>
   </div>
+  <a
+      class="is-size-1 column is-12 pl-5"
+      @drop="onDropDelete($event)"
+      @dragover.prevent="binColor='red'"
+      @dragleave.prevent="binColor='blue'"
+      @dragenter.prevent
+      :style="{'width':'100px','color':binColor}"
+      ><i class="fa-solid fa-trash"></i
+    ></a>
 </template>
 
 
@@ -291,6 +295,7 @@ export default {
       filtered_ticket_list:[],
       createNewProject:false,
       tmpProject:{'name':'','description':'','submitter':''},
+      binColor:false,
     };
   },
   components: {
@@ -338,6 +343,7 @@ export default {
     }
   },
   methods: {
+  
       async createProject(){
         this.tmpProject.submitter = JSON.parse(localStorage.getItem('user'))
         await axios
@@ -346,9 +352,26 @@ export default {
                     console.log(response)
                     this.$router.go('/kanban')
                   })
+                  .catch((error)=>{
+                    if(error.response){
+                // console.log(error.response.data.detail);
+                // console.log(error.response.status);
+                // console.log(error.response.headers);
+                this.deleteModal=false;
+                this.$store.commit('newErrMsg',error.response.data.detail)
+              }
+              else if(error.request){
+                console.log(error.request)
+              }
+              else{
+                console.log('Error',error.message)
+              }
+              console.log(error.config)
+                  })
                   this.tmpProject.title=''
                   this.tmpProject.description=''
                   this.tmpProject.submitter=''
+                  this.createNewProject=false
       },          
     getPfilter(){
       if(localStorage.getItem('project_filter')===null){
@@ -370,6 +393,22 @@ export default {
                 .get("/api/v1/ticket/all/")
                 .then((response) => {
                   this.ticketList = response.data;
+                })
+                .catch((error)=>{
+                  if(error.response){
+                // console.log(error.response.data.detail);
+                // console.log(error.response.status);
+                // console.log(error.response.headers);
+                this.deleteModal=false;
+                this.$store.commit('newErrMsg',error.response.data.detail)
+              }
+              else if(error.request){
+                console.log(error.request)
+              }
+              else{
+                console.log('Error',error.message)
+              }
+              console.log(error.config)
                 });
             this.filterTicketList();
     },
@@ -413,6 +452,22 @@ export default {
         .then((response) => {
           console.log(response);
           this.editTicket = false;
+        })
+        .catch((error)=>{
+          if(error.response){
+                // console.log(error.response.data.detail);
+                // console.log(error.response.status);
+                // console.log(error.response.headers);
+                this.deleteModal=false;
+                this.$store.commit('newErrMsg',error.response.data.detail)
+              }
+              else if(error.request){
+                console.log(error.request)
+              }
+              else{
+                console.log('Error',error.message)
+              }
+              console.log(error.config)
          
         });
       this.editTitle = false;
@@ -436,7 +491,24 @@ export default {
           this.createTicket = false;
           this.$router.go("/kanban");
 
+        })
+        .catch((error)=>{
+          if(error.response){
+                // console.log(error.response.data.detail);
+                // console.log(error.response.status);
+                // console.log(error.response.headers);
+                this.deleteModal=false;
+                this.$store.commit('newErrMsg',error.response.data.detail)
+              }
+              else if(error.request){
+                console.log(error.request)
+              }
+              else{
+                console.log('Error',error.message)
+              }
+              console.log(error.config)
         });
+      this.createTicket=false
 
       // for(const key of Object.entries(this.createdTicket)){
       //     key=''
@@ -448,12 +520,11 @@ export default {
       this.createdTicket.status = status;
     },
     onDropDelete(event) {
+      this.binColor='blue'
       this.deleted_id = Number(event.dataTransfer.getData("itemID"));
       this.deleteModal = true;
     },
-    emitLog(a){
-      console.log('Kanban Listening')
-    },
+
     deleteTicket() {
         axios
             .delete(`/api/v1/ticket/${this.deleted_id}/delete`)
@@ -483,6 +554,22 @@ export default {
           .get('/api/v1/two_projects/')
           .then(response=>{
               this.projectList=response.data
+          })
+          .catch((error)=>{
+            if(error.response){
+                // console.log(error.response.data.detail);
+                // console.log(error.response.status);
+                // console.log(error.response.headers);
+                this.deleteModal=false;
+                this.$store.commit('newErrMsg',error.response.data.detail)
+              }
+              else if(error.request){
+                console.log(error.request)
+              }
+              else{
+                console.log('Error',error.message)
+              }
+              console.log(error.config)
           })
     }
   },

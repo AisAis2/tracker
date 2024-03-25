@@ -5,5 +5,6 @@ urlpatterns = [
     path('api/v1/',include('djoser.urls')),
     path('api/v1/',include('djoser.urls.authtoken')),
     path('api/v1/', include('project.urls')),
-    path('api/v1/', include('ticket.urls'))
+    path('api/v1/', include('ticket.urls')),
+    # path('api/v1/',include('knox.urls'))
 ]

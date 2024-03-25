@@ -1,5 +1,5 @@
 <template>
-    <div class="projects">
+    <div class="projects" >
     <table class="table">
         <thead>
             <tr>

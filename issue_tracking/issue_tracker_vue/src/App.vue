@@ -39,22 +39,22 @@
           </div>
         </nav>
         <div class="columns is-gapless" >
-          <div class="column is-2 has-background-primary-on-scheme " :style="{'height':'1000px','position':'sticky'}">
-              <router-link to='/kanban' class="navbar-item p-4 is-family-monospace ml-6">Kanban</router-link>
+          <div class="column is-2 has-background-info-light " :style="{'position':'sticky'}">
+              <router-link to='/kanban' class="navbar-item p-4 is-family-monospace ml-6 has-text-weight-bold">Kanban</router-link>
 
-              <router-link to="/ticket/all" class="navbar-item  p-4 is-family-monospace ml-6">Tickets</router-link>
-              <router-link to="/projects/" class="navbar-item  is-family-monospace p-4 ml-6">Projects</router-link>
+              <router-link to="/ticket/all" class="navbar-item  p-4 is-family-monospace ml-6 has-text-weight-bold">Tickets</router-link>
+              <router-link to="/projects/" class="navbar-item  is-family-monospace p-4 ml-6 has-text-weight-bold">Projects</router-link>
           
 
             </div>
-          <div class="column is-10" :style="{'height':'1000px','overflow':'auto'}">
+          <div class="column is-10 has-background-info-light" :style="{'height':'1000px'}">
             <router-view/>
 
           </div>  
         </div>
       <footer class="footer">
-    <p class="has-text-centered">Copyright (c) 2023</p>
-  </footer>
+        <p class="has-text-centered">Copyright (c) 2023</p>
+      </footer>
 
     </div>
     <ToastMessage

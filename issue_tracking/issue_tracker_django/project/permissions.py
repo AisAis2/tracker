@@ -22,7 +22,9 @@ class ProjectPermissions(permissions.BasePermission):
             return True
         return False
 class TicketPermissions(permissions.BasePermission):
+
     def has_permission(self,request,view):
+
         if not request.user.is_authenticated:
             return False
         return self.has_object_permission(request,view,request.data)
