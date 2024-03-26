@@ -54,7 +54,30 @@ export default {
         document.title = 'Log In | IT'
     },
     methods:{
-
+        async getPerms(){
+            await axios
+                .get('api/v1/group/perms')
+                .then((response)=>{
+                    console.log(typeof(response.data))
+                    this.$store.commit('setPermsList',response.data)
+                })
+                .catch((error)=>{
+            if(error.response){
+                // console.log(error.response.data.detail);
+                // console.log(error.response.status);
+                // console.log(error.response.headers);
+                this.deleteModal=false;
+                this.$store.commit('newErrMsg',error.response.data.detail)
+              }
+              else if(error.request){
+                console.log(error.request)
+              }
+              else{
+                console.log('Error',error.message)
+              }
+              console.log(error.config)
+          })
+        },  
         async submitForm(){
             axios.defaults.headers.common['Authorization'] = ""
 
@@ -75,8 +98,9 @@ export default {
                     this.getUser()
 
                     const toPath = this.$route.query.to || '/'
-
                     this.$router.push(toPath)
+                    this.getPerms();
+
 
                 })
                 .catch(error =>{

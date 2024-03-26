@@ -4,7 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 from django.http import HttpResponse
 from rest_framework.response import Response
-
+from django.db.models import Q
 from .models import Project
 from .serializers import ProjectSerializer
 from .forms import createProject
@@ -12,7 +12,11 @@ from .permissions import ProjectPermissions
 
 class twosProjects(APIView):
     def get(self,request, format = None):#overwrite get functionality
-        projects = Project.objects.all()
+        if request.user.is_superuser:
+            projects = Project.objects.all()
+        else:
+            # projects = Project.objects.all()
+            projects = Project.objects.filter(Q(assignees=request.user)| Q(submitter = request.user))
         serializer = ProjectSerializer(projects, many = True)
         return Response(serializer.data)
 class projectView(APIView):
@@ -46,9 +50,16 @@ class projectView(APIView):
         project.delete()
         return Response({"status":"HTTP_204_NO_CONTENT"})
 
+@api_view(['GET'])
+def getPermFrontEnd(request):
+    perms = []
+    for i in request.user.groups.all():
+        for j in i.permissions.all():
+            perms.append(j.codename)
+    return Response(perms)
+
 @api_view(['POST'])#This decorator was required for function based V
 def addNewUserToGroup(request):
-    print('Adding the '+request.data['username']+'to cuser Group')
     if request.method =='POST':
         try:
             u = User.objects.get(username = request.data['username'])

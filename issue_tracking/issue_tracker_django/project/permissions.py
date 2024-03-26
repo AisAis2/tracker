@@ -9,6 +9,8 @@ class ProjectPermissions(permissions.BasePermission):
     def has_object_permission(self,request,view):#it stops here
         if request.user.is_superuser:
             return True
+        if request.user.has_perm('project.view_project') and request.method=='GET':
+            return True
         if request.user.has_perm('project.add_project') and request.method =='POST':
             return True
         # if request.method in permissions.SAFE_METHODS:# add case when methods is unsafe return false

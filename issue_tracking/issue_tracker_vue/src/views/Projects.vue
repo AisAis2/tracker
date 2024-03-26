@@ -1,6 +1,7 @@
 <template>
-    <div class="projects" >
-    <table class="table">
+    <div class="projects" :style="{'font-family':'monospace'}">
+    <h1 class="is-size-2 is-family-primary has-text-grey mx-6">Project List</h1>
+    <table class="table is-fullwidth">
         <thead>
             <tr>
                 <th class="px-6">Project Name</th>
@@ -18,10 +19,10 @@
                 <td class="px-6" v-else>{{project.submitter.username}}</td>
                 <td class="px-6">Member</td>
                 <td class="px-6">
-                    <button class="button is-outlined is-small is-info mr-2" data-target="modal-ter" aria-haspopup='true' @click='initEditProject(index)'>
+                    <button class="button is-outlined is-small is-info mr-2 has-text-weight-bold" data-target="modal-ter" aria-haspopup='true' @click="this.$store.dispatch('checkPerms',['change_project',initEditProject,'You have no permission to edit project(s).',index])">
                         Edit 
                     </button>
-                    <button class="button is-outlined is-small is-danger" data-target="modal-del" aria-haspopup='true' @click='initDeleteProject(project.id)'>
+                    <button class="button is-outlined is-small is-danger has-text-weight-bold" data-target="modal-del" aria-haspopup='true' @click="this.$store.dispatch('checkPerms',['delete_project',initDeleteProject,'You have no permission to delete project(s).',project.id])">
                             <span>Delete</span>
                                 <span class="icon is-small">
                                     <i class="fas fa-times"></i>
@@ -133,9 +134,23 @@ export default {
                     this.$router.go('/projects/')
                     console.log(response)
                 })
-                .catch(error =>{
-                    console.log(error)
-                })
+                .catch(error=>{
+              if(error.response){
+                // console.log(error.response.data.detail);
+                // console.log(error.response.status);
+                // console.log(error.response.headers);
+                this.deleteModal=false;
+                this.$store.commit('newErrMsg',error.response.data.detail)
+              }
+              else if(error.request){
+                console.log(error.request)
+              }
+              else{
+                console.log('Error',error.message)
+              }
+              console.log(error.config)
+            })
+                this.isActiveDelete=false;
         },
         editProject(id){
             const ids = id
@@ -144,6 +159,23 @@ export default {
                 .then(response =>{
                     this.$router.go('/projects/')
                 })
+                .catch(error=>{
+              if(error.response){
+                // console.log(error.response.data.detail);
+                // console.log(error.response.status);
+                // console.log(error.response.headers);
+                this.deleteModal=false;
+                this.$store.commit('newErrMsg',error.response.data.detail)
+              }
+              else if(error.request){
+                console.log(error.request)
+              }
+              else{
+                console.log('Error',error.message)
+              }
+              console.log(error.config)
+            })
+            this.isActive=false;
         }
         
     }

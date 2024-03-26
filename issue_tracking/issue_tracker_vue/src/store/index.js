@@ -7,6 +7,7 @@ export default createStore({
     project_filter:'General',
     user:'',
     errorMsg:'',
+    perms_list:[],
   },
   getters: {
   },
@@ -40,10 +41,37 @@ export default createStore({
     removeUser(state){
       state.user=''
       localStorage.removeItem('user')
-    }
+    },
+    setPermsList(state,list){
+        state.perms_list=list
+        localStorage.setItem('perms_list',list)
+    },
+    getPermsList(state){
+      if(localStorage.getItem('perms_list')){
+        state.perms_list= localStorage.getItem('perms_list').split(',')
+      }
+      console.log(state.perms_list)
+    },
+
 
   },
   actions: {
+    checkPerms(context,arr){
+      for(let i=0;i<context.state.perms_list.length;i++){
+        
+        if(context.state.perms_list[i]===arr[0]){
+          if(arr.length==4){
+            arr[1](arr[3]);
+
+          }
+          else{
+            arr[1]()
+          }
+          return;
+        }
+      }
+      context.commit('newErrMsg',arr[2])
+    }
   },
   modules: {
   }

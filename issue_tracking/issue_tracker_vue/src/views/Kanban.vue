@@ -12,7 +12,7 @@
               >{{project.name}}</option>
             </select>
         </div>
-        <span class="has-background-primary-light"><button class="button is-info is-light" @click="createNewProject=!createNewProject"><i class="fa-solid fa-plus"></i></button></span>
+        <span class="has-background-primary-light"><button class="button is-white" @click="createNewProject=!createNewProject"><i class="fa-solid fa-plus"></i></button></span>
     </div>
       <kanbancolumnVue
       v-for='(status,counter) in cols'

@@ -1,5 +1,5 @@
 $family-monospace:'monospace';
 
-@use "node_modules/bulma/sass/utilities/_all.sass" with (
+@use "node_modules/bulma/sass/utilities/derived-variables.sass" with (
     $family-primary: $family-monospace
 );

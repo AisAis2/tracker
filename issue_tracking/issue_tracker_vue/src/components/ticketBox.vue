@@ -1,12 +1,12 @@
 <template>
-    <div :class="{'box':true, 'my-3':true, bgColor:true }" :style="{'height':'110px','overflow':'hidden'}" >
+    <div :class="{'box':true, 'm-3':true, bgColor:true }" :style="{'height':'110px','overflow':'hidden'}" >
         <div class="is-flex is-flex-direction-column ">
             <div class="is-flex is-flex-direction-row" :style="{'height':'50px','overflow':'hidden'}">
                 <div class="is-flex" :style="{'width':'200px'}">
                     <span class="is-size-6 has-text-weight-semibold is-align-content-center is-clipped is-family-monospace">{{ticket.title}}</span>
                 </div>
                     <div class="is-flex ml-5">
-                        <a  @click="emitClick()"><span class=" is-size-7"><i class="fa-solid fa-square-plus"></i></span></a>
+                        <a  @click="this.$store.dispatch('checkPerms',['change_ticket',emitClick,'You have no permission to edit ticket(s).'])"><span class=" is-size-7"><i class="fa-solid fa-square-plus"></i></span></a>
                     </div>
             </div>
             <div class="is-flex is-flex-direction-row ">

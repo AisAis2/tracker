@@ -3,7 +3,7 @@
   <div class="columns is-gapless">
 
     <div class="column">
-              <nav class="navbar is-light p-1" :style="{'border-style':'none','box-shadow':'1px 1px'}">
+              <nav class="navbar is-link is-light p-1" :style="{'border-style':'none','box-shadow':'1px 1px'}">
           <div class="navbar-brand">
             <router-link to='/' class="navbar-item"><i class="fa-solid fa-house"></i></router-link>
             <a class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar-menu" @click ="showMobileMenu = !showMobileMenu">
@@ -39,7 +39,7 @@
           </div>
         </nav>
         <div class="columns is-gapless" >
-          <div class="column is-2 has-background-info-light " :style="{'position':'sticky'}">
+          <div class="is-flex-direction-column  has-background-info-light " :style="{'position':'sticky','width':'300px'}">
               <router-link to='/kanban' class="navbar-item p-4 is-family-monospace ml-6 has-text-weight-bold">Kanban</router-link>
 
               <router-link to="/ticket/all" class="navbar-item  p-4 is-family-monospace ml-6 has-text-weight-bold">Tickets</router-link>
@@ -47,7 +47,7 @@
           
 
             </div>
-          <div class="column is-10 has-background-info-light" :style="{'height':'1000px'}">
+          <div class="is-flex-direction-row mx-5 my-2" :style="{'height':'1000px','overflow-x':'hidden'}">
             <router-view/>
 
           </div>  
@@ -55,7 +55,6 @@
       <footer class="footer">
         <p class="has-text-centered">Copyright (c) 2023</p>
       </footer>
-
     </div>
     <ToastMessage
     v-if="errMsg"
@@ -84,6 +83,7 @@ export default {
   },
   beforeCreate(){
     this.$store.commit('initializeStore')
+    this.$store.commit('getPermsList')
     const token = this.$store.state.token
     if(token){
       axios.defaults.headers.common['Authorization'] = 'Token '+token
