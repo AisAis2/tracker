@@ -16,6 +16,7 @@ class UserSerializer(serializers.ModelSerializer):
             }
         }
 class ProjectSerializer(serializers.ModelSerializer):
+    assignees = UserSerializer(allow_null=True,many=True)
     submitter = UserSerializer(allow_null=True)
     class Meta:
         model = Project
@@ -23,7 +24,8 @@ class ProjectSerializer(serializers.ModelSerializer):
             "id",
             "name",
             "description",
-            "submitter"
+            "submitter",
+            'assignees'
         )
     def create(self,data):
         submitter=None
@@ -35,3 +37,17 @@ class ProjectSerializer(serializers.ModelSerializer):
             project.submitter=submitter
             project.save()
         return project
+    def update(self,instance,validated_data):
+        if 'assignees' in validated_data:
+            assignees_data = validated_data.pop('assignees')
+        if 'submitter' in validated_data and validated_data['submitter']!=None:
+            submitter_data= validated_data.pop('submitter')
+            instance.submitter = User.objects.get(username=submitter_data['username'])
+        instance.name = validated_data.get('name',instance.name)
+        instance.description = validated_data.get('description',instance.description)
+        for i in assignees_data:
+            u=User.objects.get(username=i['username'])
+            instance.assignees.add(u)
+        instance.save()
+        return instance
+        

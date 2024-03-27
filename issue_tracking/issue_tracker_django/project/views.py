@@ -38,7 +38,7 @@ class projectView(APIView):
             serializer.save()
             return Response({'message':'Succesfully created new project','status':'HTTP_200_OK'})
         return Response({'message':'Error when creating projects','status':'HTTP_400_BAD_REQUEST'})
-    def put(self,request,id,formate=None):
+    def put(self,request,id,format=None):
         project = self.get_object(id)
         serializer = ProjectSerializer(project,data=request.data)
         if serializer.is_valid():

@@ -2,7 +2,7 @@
     <div class="log-in">
             <div class="page-sign-up">
         <div class="columns">
-            <div class="column is-4 is-offset-4">
+            <div class="column is-4 is-offset-4" :style="{'width':'600px'}">
                 <h1 class="title">Log in</h1>
                 <form @submit.prevent="submitForm">
                     <div class="field">

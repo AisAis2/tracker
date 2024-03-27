@@ -1,6 +1,12 @@
 <template>
-  <div class="kanban columns is-multiline">
-    <div class="column is-12 pl-5 is-flex-direction-column mx-3">
+  <div class="kanban columns is-multiline is-gapeless">
+    <nav class="breadcrumb mt-4 mx-5 px-4" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li class="is-active"><a href="#" aria-current="page">Board</a></li>
+  </ul>
+</nav>
+    <div class="column is-12 mx-4 px-5">
       <div class="is-family-monospace">Project Filter</div>
         <div class="select is-info">
             <select v-model='project_filter' @change = "filterTicketList()" class="is-family-monospace">
@@ -26,6 +32,8 @@
       @ticketClick='clickedEmit'
       @initCreateTicket='initCreate'
       />
+
+
 
 
 <!-- Delete Bin -->
@@ -259,7 +267,7 @@
     </div>
   </div>
   <a
-      class="is-size-1 column is-12 pl-5"
+      class="is-size-1 column is-12 pl-5 px-5 mx-3"
       @drop="onDropDelete($event)"
       @dragover.prevent="binColor='red'"
       @dragleave.prevent="binColor='blue'"

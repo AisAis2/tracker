@@ -38,18 +38,14 @@
             </div>
           </div>
         </nav>
-        <div class="columns is-gapless" >
+        <div class="is-flex" >
           <div class="is-flex-direction-column  has-background-info-light " :style="{'position':'sticky','width':'300px'}">
-              <router-link to='/kanban' class="navbar-item p-4 is-family-monospace ml-6 has-text-weight-bold">Kanban</router-link>
-
-              <router-link to="/ticket/all" class="navbar-item  p-4 is-family-monospace ml-6 has-text-weight-bold">Tickets</router-link>
-              <router-link to="/projects/" class="navbar-item  is-family-monospace p-4 ml-6 has-text-weight-bold">Projects</router-link>
-          
-
+              <router-link to='/kanban' class="navbar-item is-family-monospace has-text-weight-bold">Kanban</router-link>
+              <router-link to="/ticket/all" class="navbar-item  is-family-monospace  has-text-weight-bold">Tickets</router-link>
+              <router-link to="/projects/" class="navbar-item  is-family-monospace   has-text-weight-bold">Projects</router-link>
             </div>
-          <div class="is-flex-direction-row mx-5 my-2" :style="{'height':'1000px','overflow-x':'hidden'}">
+          <div class="mx-5 my-2" :style="{'height':'1000px'}">
             <router-view/>
-
           </div>  
         </div>
       <footer class="footer">
@@ -91,6 +87,11 @@ export default {
       axios.defaults.headers.common['Authorization'] = ""
     }
   },
+  mounted(){
+    if(this.$store.state.perms_list.length>7){
+      this.getUsersList()
+    }
+  },
 components:{
   ToastMessage
 },
@@ -98,7 +99,14 @@ computed:mapState({
   errMsg:state=>state.errorMsg
 }),
 methods:{
-
+    async getUsersList(){
+      await axios
+          .get('/api/v1/users/')
+          .then((response)=>{
+            this.$store.commit('setUserList',response.data)
+            this.$store.commit('getUserList')
+          })
+    }
 }
 
 }

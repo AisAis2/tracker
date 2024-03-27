@@ -8,6 +8,7 @@ export default createStore({
     user:'',
     errorMsg:'',
     perms_list:[],
+    user_list:[],
   },
   getters: {
   },
@@ -22,7 +23,8 @@ export default createStore({
         state.isAuthenticated = false
       }
     },
-    async newErrMsg(state,msg){
+
+     newErrMsg(state,msg){
       state.errorMsg=msg;
       setTimeout(()=>{state.errorMsg=''},4000)
     },
@@ -50,8 +52,17 @@ export default createStore({
       if(localStorage.getItem('perms_list')){
         state.perms_list= localStorage.getItem('perms_list').split(',')
       }
-      console.log(state.perms_list)
     },
+    setUserList(state,list){
+      state.user_list=list
+      localStorage.setItem('user_list',JSON.stringify(list))
+    },
+    getUserList(state){
+      if(localStorage.getItem('user_list')){
+        state.user_list= JSON.parse(localStorage.getItem('user_list'))
+      }
+
+    }
 
 
   },

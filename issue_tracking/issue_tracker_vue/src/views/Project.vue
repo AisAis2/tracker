@@ -1,5 +1,5 @@
 <template >
-    <div class="is-flex is-flex-direction-column" :style="{'font-family':'monospace'}">
+    <div class="is-flex is-flex-direction-column" :style="{'font-family':'monospace'}" v-if="project.assignees">
         <div class="is-flex">
             <h1 class="title">{{project.name}}</h1>
         </div> 
@@ -15,12 +15,16 @@
         </div>
         <div class="is-flex-directopm-column my-5">
             <label class="is-size-4 has-text-weight-semibold">Assignees</label>
-            <p v-if="project.assignee">{{project.assginee.username}}</p>
+            <p v-if="this.project.assignees.length>0">{{project.assignees[0].username}}</p>
             <p v-else>No Assignees</p>
         </div>
+
         <button class="button is-primary" :style="{'width':'200px'}">
             <router-link to="/projects">
             <span>Back to Projects</span></router-link>
+        </button>
+        <button class="button is-info" @click="editProject">
+            edit
         </button>
     </div>
 </template>
@@ -34,30 +38,46 @@ export default {
             tickets:[],
             tmp_project:{},
             edit_desc:false,
+            user:''
         }
     },
-    beforeMount(){  
-        this.getProject()
-        // this.getTickets()
+    async mounted(){
+        await this.getProject()
+    },
+    computed:{
+        assigness(){
+            console.log(this.project.assigness==null)
+            return ~this.project.assigness===null 
+        }
     },
     methods:{
         async editProject(){
             const  id = this.$route.params.id
+            this.user = {
+                'email':'',
+                'id':24,
+                'username':'Aisultan3'
+            }
+            this.tmp_project.assignees=[this.user]
             await axios
-                .put(`/api/v1/project/${id}/edit`)
+                .put(`/api/v1/project/${id}/edit`,this.tmp_project)
                 .then((response)=>{
-
+                    console.log('success')
+                    
                 })
         },
-        async getProject(){
+        async  getProject(){
 
             const id = this.$route.params.id
             
-            await axios
+             await axios
                 .get(`/api/v1/project/${id}/`)
                 .then(response => {
                     this.project = response.data
                     this.tmp_project = response.data
+                    console.log(this.project)
+                    console.log(Object.keys(this.project.assignees).length)
+                    
                 })
                 .catch(error =>{
                     console.log(error)
@@ -76,7 +96,12 @@ export default {
                 .catch(error =>{
                     console.log(error)
                 })
-        }
+        },
+        // async addUser(){
+
+        //     await axios 
+        //             .put('')
+        // }
     }
 }
 </script>

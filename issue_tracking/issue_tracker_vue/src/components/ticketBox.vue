@@ -1,5 +1,5 @@
 <template>
-    <div :class="{'box':true, 'm-3':true, bgColor:true }" :style="{'height':'110px','overflow':'hidden'}" >
+    <div :class="{'box':true, 'my-5':true, bgColor:true  }" :style="{'height':'110px','overflow':'hidden','border':'solid','box-shadow':'1px 1px'}" >
         <div class="is-flex is-flex-direction-column ">
             <div class="is-flex is-flex-direction-row" :style="{'height':'50px','overflow':'hidden'}">
                 <div class="is-flex" :style="{'width':'200px'}">
