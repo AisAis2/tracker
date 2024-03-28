@@ -23,7 +23,10 @@ export default createStore({
         state.isAuthenticated = false
       }
     },
-
+    setPfilter(state,filter){
+      state.project_filter=filter
+      localStorage.setItem('project_filter',filter)
+    },
      newErrMsg(state,msg){
       state.errorMsg=msg;
       setTimeout(()=>{state.errorMsg=''},4000)

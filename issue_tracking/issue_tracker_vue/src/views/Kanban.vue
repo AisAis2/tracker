@@ -1,5 +1,5 @@
 <template>
-  <div class="kanban columns is-multiline is-gapeless">
+  <div class="kanban columns is-multiline is-gapeless is-family-monospace ">
     <nav class="breadcrumb mt-4 mx-5 px-4" aria-label="breadcrumbs">
   <ul>
     <li><a href="/">Home</a></li>
@@ -14,11 +14,9 @@
               <option
               v-for='project in projectList'
               :key = 'project.name'
-              :class="{'is-family-monospace':'true'}"
               >{{project.name}}</option>
             </select>
         </div>
-        <span class="has-background-primary-light"><button class="button is-white" @click="createNewProject=!createNewProject"><i class="fa-solid fa-plus"></i></button></span>
     </div>
       <kanbancolumnVue
       v-for='(status,counter) in cols'
@@ -182,20 +180,37 @@
             </div>
           </div>
           <div class="field">
-            <div class="select my-2 is-success is-rounded">
+            <label class="is-size-5 has-text-weight-bold">Priority</label>
+            <div class="control">
+              <div class="select my-2 is-link is-rounded">
               <select v-model="createdTicket.priority">
                 <option v-for="select in priorityList" :key="select">
                   {{ select }}
                 </option>
               </select>
             </div>
+            </div>
+
+          </div>
+          <div class="field">
+            <label class="is-size-5 has-text-weight-bold">Type</label>
+            <div class="control">
+              <div class="select my-2 is-link is-rounded">
+              <select v-model="createdTicket.type">
+                <option v-for="select in selectList" :key="select">
+                  {{ select }}
+                </option>
+              </select>
+            </div>
+            </div>
+
           </div>
 
 
 
         </section>
         <footer class="modal-card-foot">
-          <button class="button is-primary" @click="createTicketF()">
+          <button class="button is-info" @click="createTicketF()">
             Save
           </button>
           <button class="button" @click="createTicket = false">Cancel</button>
@@ -222,46 +237,6 @@
             Delete
           </button>
           <button class="button" @click="deleteModal = false">Cancel</button>
-        </footer>
-      </div>
-    </div>
-    <!-- Create Project Modal -->
-    <div :class="{ 'is-active': createNewProject, modal: true }" id="modal-tic">
-      <div class="modal-background"></div>
-      <div class="modal-card">
-        <header class="modal-card-head">
-          <p class="modal-card-title is-family-monospace">Create Project</p>
-          <button
-            class="delete"
-            aria-label="close"
-            @click="createNewProject = false"
-          ></button>
-        </header>
-        <section class="modal-card-body">
-          <div class="field">
-            <div class="my-2 is-success is-rounded">
-              <label class="is-size-5 has-text-weight-bold">Title</label>
-              <div class="control">
-                <input type="text" class="input" v-model='tmpProject.name'>
-              </div>
-
-            </div>
-          </div>
-          <div class="field">
-            <div class="my-2 is-success is-rounded">
-              <label class="is-size-5 has-text-weight-bold">Description</label>
-              <div class="control">
-                <textarea type="text" class="textarea" v-model='tmpProject.description'></textarea>
-              </div>
-              
-            </div>
-          </div>
-        </section>
-        <footer class="modal-card-foot">
-          <button class="button is-success" @click="createProject()">
-            Create
-          </button>
-          <button class="button" @click="createNewProject = false">Cancel</button>
         </footer>
       </div>
     </div>
@@ -293,7 +268,7 @@ export default {
       editTitle: false,
       editDesc: false,
       createTicket: false,
-      createdTicket: { title: "", description: "", priority: "", status: "",submitter:""},
+      createdTicket: { title: "", description: "", priority: "", status: "",submitter:"",type:''},
       deleteModal: false,
       deleted_id:'',
       cols:['Backlog','Open','In Progress','Done'],
@@ -302,7 +277,6 @@ export default {
       project_filter:'General',
       filtered_ticket_list:[],
       createNewProject:false,
-      tmpProject:{'name':'','description':'','submitter':''},
       binColor:false,
     };
   },
@@ -351,36 +325,7 @@ export default {
     }
   },
   methods: {
-  
-      async createProject(){
-        this.tmpProject.submitter = JSON.parse(localStorage.getItem('user'))
-        await axios
-                  .post('api/v1/project/create/',this.tmpProject)
-                  .then((response)=>{
-                    console.log(response)
-                    this.$router.go('/kanban')
-                  })
-                  .catch((error)=>{
-                    if(error.response){
-                // console.log(error.response.data.detail);
-                // console.log(error.response.status);
-                // console.log(error.response.headers);
-                this.deleteModal=false;
-                this.$store.commit('newErrMsg',error.response.data.detail)
-              }
-              else if(error.request){
-                console.log(error.request)
-              }
-              else{
-                console.log('Error',error.message)
-              }
-              console.log(error.config)
-                  })
-                  this.tmpProject.title=''
-                  this.tmpProject.description=''
-                  this.tmpProject.submitter=''
-                  this.createNewProject=false
-      },          
+      
     getPfilter(){
       if(localStorage.getItem('project_filter')===null){
         this.project_filter = this.$store.state.project_filter

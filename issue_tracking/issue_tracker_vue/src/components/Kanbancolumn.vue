@@ -2,9 +2,9 @@
     <div class="column is-3">
             <div class="is-flex is-family-monospace has-text-weight-bold mx-5 mb-2" >
                     {{status}}({{ ticket_list.length }})
-                    <a @click="$emit('initCreateTicket',status)"><span class="has-background-info-light"><i class="fa-solid fa-plus"></i></span></a>
+                    <a @click="$emit('initCreateTicket',status)"><span><i class="fa-solid fa-plus"></i></span></a>
             </div>
-            <div class="is-flex mx-5" :style="{'height':'650px','width':'320px','overflow':'auto'}" >
+            <div class="is-flex mx-5" :style="{'height':'650px','width':'320px','overflow':'auto','box-shadow':'1px 1px'}" >
                 <div class="drop-zone" draggable="false">
                     <div class="drag-el" v-for="ticket in ticket_list" :key="ticket.id">
                             <ticketBoxVue :ticket="ticket" draggable=true @dragstart="startDrag($event,ticket)" @clicked="$emit('ticketClick',ticket.id)"/>

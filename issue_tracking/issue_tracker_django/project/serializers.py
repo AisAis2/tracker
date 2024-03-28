@@ -32,6 +32,8 @@ class ProjectSerializer(serializers.ModelSerializer):
         if 'submitter' in data and data['submitter']!=None:
             submitter_data = data.pop('submitter')
             submitter = User.objects.get(username=submitter_data['username'])
+        if 'assignees' in data:
+            assignees_data =data.pop('assignees')
         project = Project.objects.create(**data)
         if submitter!=None:
             project.submitter=submitter

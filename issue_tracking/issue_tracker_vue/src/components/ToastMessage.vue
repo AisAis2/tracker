@@ -1,5 +1,5 @@
 <template >
-    <div id="snackbar" :style="{opacity:opac}">
+    <div id="snackbar" :style="{opacity:opac,'background-color':'red'}">
         {{ message }}
     </div>
 </template>
@@ -36,7 +36,6 @@ export default{
   min-height:80px;
   border-radius:10px;
   margin-left: -125px; /* Divide value of min-width by 2 */
-  background-color: #ff0000; /* Black background color */
   color: #fff; /* White text color */
   text-align: left; /* Centered text */
   padding: 16px; /* Padding */

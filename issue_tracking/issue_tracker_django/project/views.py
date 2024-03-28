@@ -4,6 +4,8 @@ from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 from django.http import HttpResponse
 from rest_framework.response import Response
+from rest_framework import status
+
 from django.db.models import Q
 from .models import Project
 from .serializers import ProjectSerializer
@@ -33,22 +35,22 @@ class projectView(APIView):
 
     def post(self,request):
         serializer = ProjectSerializer(data = request.data)
-
         if serializer.is_valid():
             serializer.save()
-            return Response({'message':'Succesfully created new project','status':'HTTP_200_OK'})
-        return Response({'message':'Error when creating projects','status':'HTTP_400_BAD_REQUEST'})
+            return Response(status = status.HTTP_201_CREATED)
+        print(serializer.errors)
+        return Response(status=status.HTTP_400_BAD_REQUEST)# request response is not showing
     def put(self,request,id,format=None):
         project = self.get_object(id)
         serializer = ProjectSerializer(project,data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
-        return Response({'message':'Error when creating projects','status':'HTTP_400_BAD_REQUEST'})
+        return Response(status=status.HTTP_400_BAD_REQUEST)
     def delete(self,request,id=None):
         project = Project.objects.filter(id=id)
         project.delete()
-        return Response({"status":"HTTP_204_NO_CONTENT"})
+        return Response(status = status.HTTP_204_NO_CONTENT)
 
 @api_view(['GET'])
 def getPermFrontEnd(request):

@@ -23,7 +23,7 @@
                     </div> -->
                     <div class="field">
                         <div class="control">
-                            <button class="button is-dark">
+                            <button class="button is-link">
                                 Create
                             </button>
                         </div>

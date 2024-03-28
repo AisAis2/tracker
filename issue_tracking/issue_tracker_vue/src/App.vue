@@ -39,7 +39,7 @@
           </div>
         </nav>
         <div class="is-flex" >
-          <div class="is-flex-direction-column  has-background-info-light " :style="{'position':'sticky','width':'300px'}">
+          <div class="is-flex-direction-column  has-background-info-light " :style="{'position':'sticky','width':'250px'}">
               <router-link to='/kanban' class="navbar-item is-family-monospace has-text-weight-bold">Kanban</router-link>
               <router-link to="/ticket/all" class="navbar-item  is-family-monospace  has-text-weight-bold">Tickets</router-link>
               <router-link to="/projects/" class="navbar-item  is-family-monospace   has-text-weight-bold">Projects</router-link>

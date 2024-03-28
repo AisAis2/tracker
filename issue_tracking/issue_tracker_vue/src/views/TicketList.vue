@@ -1,5 +1,5 @@
 <template>
-<div class="box is-flex">
+<div class="is-flex">
     <div class="tickets">
     <table class="table">
         <thead>
