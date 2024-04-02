@@ -32,10 +32,10 @@ export default{
 </script>
 <style>
 #snackbar{
-  min-width: 250px; /* Set a default minimum width */
-  min-height:80px;
+  min-width: 350px; /* Set a default minimum width */
+  min-height:100px;
   border-radius:10px;
-  margin-left: -125px; /* Divide value of min-width by 2 */
+  margin-left: -250px; /* Divide value of min-width by 2 */
   color: #fff; /* White text color */
   text-align: left; /* Centered text */
   padding: 16px; /* Padding */

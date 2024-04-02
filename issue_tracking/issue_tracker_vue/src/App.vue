@@ -44,7 +44,7 @@
               <router-link to="/ticket/all" class="navbar-item  is-family-monospace  has-text-weight-bold">Tickets</router-link>
               <router-link to="/projects/" class="navbar-item  is-family-monospace   has-text-weight-bold">Projects</router-link>
             </div>
-          <div class="mx-5 my-2" :style="{'height':'1000px'}">
+          <div class="mx-5 my-2" :style="{'height':'1000px','width':'1500px','overflow-x':'hidden'}">
             <router-view/>
           </div>  
         </div>
@@ -91,6 +91,7 @@ export default {
     if(this.$store.state.perms_list.length>7){
       this.getUsersList()
     }
+    this.$store.commit('getRole')
   },
 components:{
   ToastMessage
@@ -99,6 +100,7 @@ computed:mapState({
   errMsg:state=>state.errorMsg
 }),
 methods:{
+
     async getUsersList(){
       await axios
           .get('/api/v1/users/')

@@ -9,6 +9,7 @@ export default createStore({
     errorMsg:'',
     perms_list:[],
     user_list:[],
+    role:'',
   },
   getters: {
   },
@@ -21,6 +22,15 @@ export default createStore({
       else{
         state.token = ''
         state.isAuthenticated = false
+      }
+    },
+    setRole(state,role){
+      state.role = role
+      localStorage.setItem('role',role)
+    },
+    getRole(state,role){
+      if(~state.role){
+        state.role =  localStorage.getItem('role')
       }
     },
     setPfilter(state,filter){

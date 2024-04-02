@@ -9,6 +9,7 @@ urlpatterns = [
     path('project/<int:id>/delete',views.projectView.as_view()),
     path('project/<int:id>/edit',views.projectView.as_view()),
     path('group/add/',views.addNewUserToGroup),
-    path('group/perms/',views.getPermFrontEnd)
+    path('group/perms/',views.getPermFrontEnd),
+    path('group/group',views.getRole)
 
 ]

@@ -71,5 +71,13 @@ def addNewUserToGroup(request):
         g.user_set.add(u)
         return HttpResponse('User Succesfull added to a group')
     return Http404
+@api_view(['GET'])
+def getRole(request):
+    if request.method =='GET':
+        try:
+            u = User.objects.get(username = request.user.username)
+        except User.DoesNotExist:
+            raise Http404
+    return Response(u.groups.get().name)
 
     

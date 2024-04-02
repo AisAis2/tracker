@@ -54,6 +54,30 @@ export default {
         document.title = 'Log In | IT'
     },
     methods:{
+        async getRole(){
+      await axios
+              .get('/api/v1/group/group')
+              .then((response)=>{
+                this.$store.commit('setRole',response.data)
+   
+              })
+              .catch((error)=>{
+            if(error.response){
+                // console.log(error.response.data.detail);
+                // console.log(error.response.status);
+                // console.log(error.response.headers);
+                this.deleteModal=false;
+                this.$store.commit('newErrMsg',error.response.data.detail)
+              }
+              else if(error.request){
+                console.log(error.request)
+              }
+              else{
+                console.log('Error',error.message)
+              }
+              console.log(error.config)
+          })
+    },
         async getPerms(){
             await axios
                 .get('api/v1/group/perms')
@@ -100,6 +124,7 @@ export default {
                     const toPath = this.$route.query.to || '/'
                     this.$router.push(toPath)
                     this.getPerms();
+                    this.getRole();
 
 
                 })

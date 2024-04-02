@@ -1,14 +1,25 @@
 from rest_framework import serializers
 from .models import Project
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User,Group
 from django.contrib.auth.validators import UnicodeUsernameValidator
+
 class UserSerializer(serializers.ModelSerializer):
+    # def return_role(self):
+    #     gs = Group.object.all()
+    #     for g in gs:
+    #         if g.name =='admin' and self in g.user_set.all():
+    #             return 'admin'
+    #         if g.name == 'manager' and self in g.user_set.all():
+    #             return 'manager'
+    #         if g.name  == 'cuser' and self in g.user_set.all():
+    #             return cuser
+    # role = serializers.SerializerMethodField('return_role')
     class Meta:
         model = User
         fields = (
             'id',
             'username',
-            'email'
+            'email',
         )
         extra_kwargs = {
             'username':{
