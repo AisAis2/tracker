@@ -339,7 +339,6 @@ export default {
       id= Number(id)
       this.editTicket = true;
       this.editedTicket = this.ticketList.find((x) => x.id === id);
-      console.log(this.editedTicket)
     },
     async getTicketList() {
       await axios

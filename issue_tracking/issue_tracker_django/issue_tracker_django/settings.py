@@ -42,9 +42,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
-    'djoser',
     'project',
     'ticket',
+    'knox'
 ]   
 CORS_ALLOWED_ORIGINS = [
         "http://localhost:8080",
@@ -124,7 +124,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication',
+        'knox.auth.TokenAuthentication',
     ),
 }
 

@@ -1,9 +1,6 @@
 <template>
-        <div class="is-flex  is-family-monospace">
-            <div :style="{'width':'600px'}">
-
-            </div>
-            <div class="is-flex-direction-column " :style="{'width':'600px'}">
+        <div class="is-family-monospace is-justify-content-center is-flex">
+            <div class="is-flex-direction-column" :style="{'width':'600px'}">
                 <div class="field">
                     <label for="" class="label  is-size-4">Name</label>
                     <div class="control  is-size-5">{{ user.username }}</div>
@@ -35,7 +32,7 @@ export default {
 
             axios.defaults.headers.common["Authorization"] = 'Token '+this.$store.state.token
             axios
-            .post('/api/v1/token/logout/',this.$store.state.token)
+            .post('/api/v1/logout/',this.$store.state.token)
             .catch(error=>{
                 console.log(error)
             })

@@ -49,7 +49,7 @@ export default{
     data(){
         return{
             tmpProject:{'name':'','description':'','submitter':'','assignees':''},
-
+            createNewProject:false
         }
     },
     props:{
@@ -67,7 +67,6 @@ export default{
                       this.tmpProject.title=''
                       this.tmpProject.description=''
                       this.tmpProject.submitter=''
-                    this.$router.go('/projects')
                   })
                   .catch((error)=>{
                     if(error.response){
@@ -82,8 +81,10 @@ export default{
                     else{
                         console.log('Error',error.message)
                     }
-                    console.log(error.config)})
+                    
 
+                    console.log(error.config)})
+                    
       },    
     }
 }

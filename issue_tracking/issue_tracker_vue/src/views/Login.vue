@@ -51,7 +51,8 @@ export default {
         }
     },
     mounted(){
-        document.title = 'Log In | IT'
+        document.title = 'Log In | IT',
+        this.getUser();
     },
     methods:{
         async getRole(){
@@ -112,9 +113,10 @@ export default {
                 password: this.password
             }
             await axios
-                .post('/api/v1/token/login/', formData)
+                .post('/api/v1/login/', formData)
                 .then(response =>{
-                    const token = response.data.auth_token
+                    console.log(response)
+                    const token = response.data.token
                     this.$store.commit('setToken',token)
 
                     axios.defaults.headers.common["Authorization"] = 'Token'+' '+token

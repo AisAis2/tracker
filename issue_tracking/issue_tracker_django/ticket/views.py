@@ -18,9 +18,16 @@ class ticketsProject(APIView):
         return Response(serializer.data)
 class ticketsList(APIView):
     def get(self,request,format = None):
-        tickets = Ticket.objects.all()  
+        ticket_per_page = 10
+        page_number = int(request.GET['page'])-1
+        length = len(Ticket.objects.all())
+        if page_number*ticket_per_page+ticket_per_page>length:
+            end = length
+        else:
+            end = page_number*ticket_per_page+ticket_per_page
+        tickets = Ticket.objects.all()[page_number*ticket_per_page:end]
         serializer = TicketSerializer(tickets, many =True)
-        return Response(serializer.data)
+        return Response([serializer.data,length])
 class ticketView(APIView):
     permission_classes=[TicketPermissions]
     def get_object(self,id):

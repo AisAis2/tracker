@@ -108,11 +108,18 @@ methods:{
             this.$store.commit('setUserList',response.data)
             this.$store.commit('getUserList')
           })
-    }
+    },
+    closeModal(){
+             const modal = document.querySelector('.modal')
+             modal.addEventListener('keydown',()=>{
+              console.log('ESC')
+              modal.classList.remove('is-active')
+             })
+}
 }
 
 }
-  
+
 </script>
 
 
