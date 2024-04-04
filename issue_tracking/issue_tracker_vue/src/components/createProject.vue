@@ -49,7 +49,6 @@ export default{
     data(){
         return{
             tmpProject:{'name':'','description':'','submitter':'','assignees':''},
-            createNewProject:false
         }
     },
     props:{
@@ -67,6 +66,7 @@ export default{
                       this.tmpProject.title=''
                       this.tmpProject.description=''
                       this.tmpProject.submitter=''
+                      this.$emit('projectCreated')
                   })
                   .catch((error)=>{
                     if(error.response){

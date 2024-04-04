@@ -14,6 +14,24 @@ from .permissions import ProjectPermissions
 
 class twosProjects(APIView):
     def get(self,request, format = None):#overwrite get functionality
+        if 'page' in request.GET.keys():
+            num = 10
+            page = int(request.GET['page'])-1
+            if request.user.is_superuser:
+                projects = Project.objects.all()
+            else:
+                projects = Project.objects.filter(Q(assignees=request.user)| Q(submitter = request.user))
+            length = len(projects)
+            if length<num*page:
+                end = length
+            else:
+
+                end = (num)*(page+1)
+            projects = projects[page*num:end]
+
+            serializer = ProjectSerializer(projects, many = True)
+            return Response([serializer.data,length])
+
         if request.user.is_superuser:
             projects = Project.objects.all()
         else:

@@ -11,7 +11,6 @@ from project.serializers import UserSerializer
 
 class LoginView(KnoxLoginView):
     permission_classes = (permissions.AllowAny,)
-
     def post(self, request, format=None):
         serializer = AuthTokenSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)

@@ -66,7 +66,6 @@ export default {
                 axios
                     .post('/api/v1/project/create/',formData)
                     .then(response =>{
-                        console.log(formData)
                         this.$router.push("/projects/")//TODO:push works here, but not in case of delete
 
                     })

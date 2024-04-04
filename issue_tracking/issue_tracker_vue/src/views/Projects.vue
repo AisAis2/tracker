@@ -1,11 +1,17 @@
 <template>
-    <div class="is-flex-direction-row " :style="{'font-family':'monospace'}">
+    <div class="is-flex-direction-column " :style="{'font-family':'monospace'}">
+        <nav class="breadcrumb mt-4 mx-6" aria-label="breadcrumbs">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li class="is-active"><a href="#" aria-current="page">Projects</a></li>
+            </ul>
+        </nav>
         <h1 class="is-size-2 is-family-primary has-text-grey mx-6">Project List
-            <i class="fa-solid fa-plus is-size-5" @click="createProject=!createProject" :style="{'cursor':'pointer'}"></i>
+            <i class="fa-solid fa-plus is-size-5 has-text-info" @click="createProject=!createProject" :style="{'cursor':'pointer','margin-top':'20px'}"></i>
         </h1>
-        <div class="is-flex " :style="{'width':'1300px'}">
+        <div :style="{'width':'1300px','height':'520px'}">
             
-            <table class="table is-fullwidth">
+            <table class="table" :style="{'width':'1300px'}">
                 <thead>
                     <tr>
                         <th class="px-6">Project Name</th>
@@ -16,7 +22,7 @@
                 </thead>
                 <tbody>
                     <tr v-for="(project,index) in projectsList"
-                    v-bind:key="project.id">
+                    v-bind:key="project.id" :style="{'height':'50px'}">
                         <td class="px-6"><router-link :to="{path:'/kanban/'}" @click="goKanban(project.name)">{{project.name}}</router-link></td>
                         <td class="px-6" v-if="!project.submitter">Creator</td>
 
@@ -37,8 +43,38 @@
                     </tr>
                 </tbody>
             </table>
-        </div>
 
+
+        </div>
+        <div class="is-flex">
+                    <nav class="pagination mx-6 mt-5" role="navigation" aria-label="pagination">
+                        <a class="pagination-previous" title="This is the first page"
+                        :style="{'pointer-events': isDisabled}"
+                        :class="{'is-disabled':isDisabled==='none'}"
+                        @click="currentPage=currentPage-1,getProjectList()"
+                        v-if="projectListLength!==1"
+                        >Previous</a
+                        >
+                        <a href="#" class="pagination-next"
+                        :style="{'pointer-events': isDisabled2}"
+                        :class="{'is-disabled':isDisabled2==='none'}"
+                        @click="currentPage=currentPage+1,getProjectList()"
+                        v-if="projectListLength!==1"
+                        >Next page</a>
+                            <ul class="pagination-list">
+                                    <li v-for="index in projectListLength" :key='index'>
+                                        <a
+                                        :class="{'pagination-link':true,  'is-current':currentPage==index}"
+                                        aria-label="Page 1"
+                                        aria-current="page"
+                                        @click = "currentPage=index,getProjectList()"
+                                        >{{ index }}</a
+                                        >
+                                    </li>
+
+                            </ul>
+                    </nav>
+            </div>
 
 
 
@@ -87,6 +123,7 @@
     </div>
     <createProjectVue
     :createNewProject="createProject"
+    @projectCreated = "this.$router.go('/projects/')"
     />
     <div :class="{'is-active':isActiveDelete,'modal':true}" id='modal-del'>
         <div class="modal-background"></div>
@@ -128,7 +165,9 @@ export default {
             editName:true,
             createProject:false,
             tmp_usr:[],
-            lll:false
+            lll:false,
+            currentPage:1,
+            projectListLength:''
             
         }
     },
@@ -145,6 +184,20 @@ export default {
         },
         userList(){
             return this.$store.state.user_list
+        },
+        isDisabled(){
+                if(this.currentPage<=1){
+                return 'none'
+            }
+            return 'auto'
+        },
+        isDisabled2(){
+                if(this.currentPage>=this.projectListLength){
+                return 'none'
+            }
+            return 'auto'
+
+
         }
     },
     methods:{
@@ -158,9 +211,19 @@ export default {
         },
         getProjectList(){
             axios
-                .get('/api/v1/two_projects/')
+                .get('/api/v1/two_projects/',{
+                    params:{
+                        'page':this.currentPage,
+                    }
+                })
                 .then(response => {
-                    this.projectsList = response.data
+                    this.projectsList = response.data[0]
+                    if(Number(response.data[1])%10===0){
+                        this.projectListLength = Number(response.data[1])/10
+                    }
+                    else{
+                        this.projectListLength = Math.floor(Number(response.data[1])/10)+1
+                    }
                 })
                 .catch(error =>{
                     console.log(error)

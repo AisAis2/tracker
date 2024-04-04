@@ -47,7 +47,7 @@ export default {
 
             this.$store.commit('removeToken')
             this.$store.commit('removeUser')
-            this.$router.push('/')
+            this.$router.push('/login')
 
         },
         getUserStore(){

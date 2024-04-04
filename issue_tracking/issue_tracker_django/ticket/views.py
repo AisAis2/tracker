@@ -19,6 +19,10 @@ class ticketsProject(APIView):
 class ticketsList(APIView):
     def get(self,request,format = None):
         ticket_per_page = 10
+        if not 'page' in request.GET.keys():
+            tickets = Ticket.objects.all()
+            serializer = TicketSerializer(tickets, many =True)
+            return Response(serializer.data)
         page_number = int(request.GET['page'])-1
         length = len(Ticket.objects.all())
         if page_number*ticket_per_page+ticket_per_page>length:

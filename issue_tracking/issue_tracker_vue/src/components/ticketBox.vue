@@ -1,5 +1,5 @@
 <template>
-    <div :class="{'box':true, 'my-5':true, bgColor:true,'is-family-monospace':true  }" :style="{'height':'130px','overflow':'hidden','border':'solid','box-shadow':'1px 1px'}" >
+    <div :class="{'box':true, 'my-5':true,'mx-4':true, bgColor:true,'is-family-monospace':true  }" :style="{'height':'130px','overflow':'hidden','border':'solid','box-shadow':'1px 1px','border-width':'1px'}" >
         <div class="is-flex is-flex-direction-column ">
             <div class="is-flex is-flex-direction-row" :style="{'height':'40px','overflow':'hidden'}">
                 <div class="is-flex" :style="{'width':'200px'}">

@@ -17,7 +17,10 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: HomeView
+    component: HomeView,
+        meta:{
+      requireLogin:false,
+    }
   },
   {
     path: '/about',
@@ -39,6 +42,7 @@ const routes = [
     path:'/project/:id/',
     name: 'Project',
     component: Project
+    
   },
   {
     path:'/signup',
@@ -66,11 +70,11 @@ const routes = [
   //     requireLogin:true
   //   }
   // },
-  {
-    path:'/ticket/:id/',
-    name: 'Ticket',
-    component: Ticket
-  },
+  // {
+  //   path:'/ticket/:id/',
+  //   name: 'Ticket',
+  //   component: Ticket
+  // },
   {
     path:'/kanban',
     name: 'Kanban',
@@ -84,14 +88,14 @@ const routes = [
     name: 'CreateTicket',
     component: CreateTicket
   },
-  {
-    path:'/ticket/all',
-    name: 'TicketList',
-    component: TicketList,
-    meta:{
-      requireLogin:true
-    }
-  },
+  // {
+  //   path:'/ticket/all',
+  //   name: 'TicketList',
+  //   component: TicketList,
+  //   meta:{
+  //     requireLogin:true
+  //   }
+  // },
   {
     path:'/users/all',
     name: 'Users',
@@ -107,7 +111,10 @@ const router = createRouter({
 router.beforeEach((to,from,next)=>{
   if(to.matched.some(record=>record.meta.requireLogin) && !store.state.isAuthenticated){//Is it a good practice?
     next({name: 'Login', query:{to:to.path}});
-  } else{
+  } else if((to.name =='Login'|to.name=='home') && store.state.isAuthenticated ){
+    next({name:'Kanban',query:{to:to.path}});
+  }
+  else{
     next()
   }
 })

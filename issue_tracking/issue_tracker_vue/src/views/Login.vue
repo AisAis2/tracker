@@ -1,8 +1,9 @@
 <template>
-    <div class="log-in">
+    <div class="log-in" :style="{'margin-top':'50px'}">
             <div class="page-sign-up">
         <div class="columns">
-            <div class="column is-4 is-offset-4" :style="{'width':'600px'}">
+            <div class="column is-4 is-offset-4" :style="{'width':'400px',}">
+                <div class="box" :style="{'width':'400px'}">
                 <h1 class="title">Log in</h1>
                 <form @submit.prevent="submitForm">
                     <div class="field">
@@ -32,8 +33,10 @@
 
                     <hr>
 
-                    No account? <router-link to="/signup">Click here</router-link> to sign up.
+                    No account? <router-link to="/">Click here</router-link> to sign up.
                 </form>
+            </div>
+
             </div>
         </div>
     </div>
