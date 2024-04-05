@@ -41,8 +41,10 @@
         </nav>
         <div class="is-flex" >
           <div class="is-flex-direction-column  has-background-info-light px-3 pt-3" :style="{'position':'sticky','width':'250px'}">
+              <router-link to='/dashboard' class="navbar-item is-family-monospace has-text-weight-bold">Dashboard</router-link>
               <router-link to='/kanban' class="navbar-item is-family-monospace has-text-weight-bold">Kanban</router-link>
               <router-link to="/projects/" class="navbar-item  is-family-monospace   has-text-weight-bold">Projects</router-link>
+              <router-link to="/users/" class="navbar-item  is-family-monospace   has-text-weight-bold" v-if="$store.state.role=='admin'">User Management</router-link>
             </div>
           <div class="mx-5 my-2" :style="{'height':'1000px','width':'1500px','overflow-x':'hidden'}">
             <router-view/>
@@ -80,6 +82,8 @@ export default {
   beforeCreate(){
     this.$store.commit('initializeStore')
     this.$store.commit('getPermsList')
+    this.$store.commit('getRole')
+
     const token = this.$store.state.token
     if(token){
       axios.defaults.headers.common['Authorization'] = 'Token '+token
@@ -87,12 +91,11 @@ export default {
       axios.defaults.headers.common['Authorization'] = ""
     }
   },
-  // mounted(){
-  //   if(this.$store.state.perms_list.length>7){
-  //     this.getUsersList()
-  //   }
-  //   this.$store.commit('getRole')
-  // },
+  mounted(){
+    if(this.$store.state.role === 'admin'){
+      this.getUsersList()
+    }
+  },
 components:{
   ToastMessage
 },

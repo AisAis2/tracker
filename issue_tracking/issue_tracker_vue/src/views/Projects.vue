@@ -1,5 +1,7 @@
-<template>
-    <div class="is-flex-direction-column " :style="{'font-family':'monospace'}">
+
+
+<template >
+    <div class="is-flex-direction-column " :style="{'font-family':'monospace'}" >
         <nav class="breadcrumb mt-4 mx-6" aria-label="breadcrumbs">
             <ul>
                 <li><a href="/">Home</a></li>
@@ -46,8 +48,8 @@
 
 
         </div>
-        <div class="is-flex">
-                    <nav class="pagination mx-6 mt-5" role="navigation" aria-label="pagination">
+        <div class="is-flex" v-if="projectListLength"  >
+                    <nav class="pagination mx-6 mt-5" role="navigation" aria-label="pagination" v-if="projectListLength!==1">
                         <a class="pagination-previous" title="This is the first page"
                         :style="{'pointer-events': isDisabled}"
                         :class="{'is-disabled':isDisabled==='none'}"
@@ -59,7 +61,7 @@
                         :style="{'pointer-events': isDisabled2}"
                         :class="{'is-disabled':isDisabled2==='none'}"
                         @click="currentPage=currentPage+1,getProjectList()"
-                        v-if="projectListLength!==1"
+                        
                         >Next page</a>
                             <ul class="pagination-list">
                                     <li v-for="index in projectListLength" :key='index'>
@@ -81,12 +83,12 @@
 
 
 
-    <div :class="{'is-active':isActive,'modal':true}" id='modal-ter' v-if="userList">
+    <div :class="{'is-active':isActive,'modal':true}" id='modal-ter'>
         <div class="modal-background"></div>
-        <div class="modal-card">
+        <div class="modal-card " :style="{'width':'500px'}">
             <header class="modal-card-head">
                 <p class="modal-card-title">Edit Project</p>
-                <button class="delete" aria-label="close" @click="isActive=false,editDesc=true,editName=true"></button>
+                <button class="delete" aria-label="close" @click="isActive=false,editDesc=true,editName=true,cleanTmpObjects()"></button>
             </header>
             <section class="modal-card-body">
                 <label class="has-text-weight-bold">Project Name</label>
@@ -97,27 +99,29 @@
                 <p v-if='editDesc'><span class="mr-5">{{editedProject.description}}</span><a @click="editDesc=!editDesc"><i :class="{'fa-solid':true,'fa-pen-to-square':true,'pointer-events':'fill'}"></i></a></p>
                 <p v-else><textarea v-model='editedProject.description' class="textarea"></textarea></p>
 
-                <div class="is-flex-direction-column">
+                <div class="is-flex-direction-column" v-if="$store.state.role =='admin'">
 
                 <label class="has-text-weight-bold">Assignees</label>
+                <div class="is-flex" v-if="assignees.length>0" :stlye="{'height':'60px', 'border-style':'solid','border-width':'2px'}">
+                    <div v-for="user in assignees" :key="user"  class="pt-2  pb-3 pl-3 pr-5" :style="{'height':'40px','border-style':'solid','border-width':'1px','border-color':'lightgray','border-radius':'20px'}">{{ user }}</div>
+                </div>
                 <br>
-                <div class="select is-small is-multiple">
-                    <select @click="pushToArr()" multiple size="4" v-model ="tmp_usr">
+                <div class="select">
+                    <select @change="pushToArr()" v-model ="tmp_usr" v-if="userList">
+                        <option disabled>Choose Assignee(s)</option>
                         <option v-for="user in userList"
                         :key="user.username"
                         >{{ user.username }}</option>
                     </select>
                 </div>
-                <div class="is-flex-direction-row" v-if="assignees">
-                    <div v-for="user in assignees" :key="user">{{ user }}</div>
-                </div>
+
 
 
                 </div>
             </section>
             <footer class="modal-card-foot">
                 <button class="button is-success" @click='editProject(editedProject.id)'>Save</button>
-                <button class="button" @click="isActive=false,editDesc=true,editName=true">Cancel</button>
+                <button class="button" @click="isActive=false,editDesc=true,editName=true,cleanTmpObjects()">Cancel</button>
             </footer>
         </div>
     </div>
@@ -167,24 +171,27 @@ export default {
             tmp_usr:[],
             lll:false,
             currentPage:1,
-            projectListLength:''
+            projectListLength:'',
+            assignees:[],
+            userList:''
+
             
         }
     },
     mounted(){
-        this.getProjectList()
+        this.getProjectList(),
+        this.userListResolve()
+
     },
     components:{
         createProjectVue,
     },
     computed:{
 
-        assignees(){
-            return []
-        },
-        userList(){
-            return this.$store.state.user_list
-        },
+        // assignees(){
+        //     return []
+        // },
+
         isDisabled(){
                 if(this.currentPage<=1){
                 return 'none'
@@ -201,10 +208,22 @@ export default {
         }
     },
     methods:{
+        userListResolve(){
+            if(this.$store.state.user_list.length>0){
+ 
+            this.userList = JSON.parse(JSON.stringify(this.$store.state.user_list))
+        }else{
+            this.userList = JSON.parse(localStorage.getItem('user_list'))
+        }
+        },
+        cleanTmpObjects(){
+            this.assignees = []
+            this.userList = JSON.parse(JSON.stringify(this.$store.state.user_list))
+        },
         pushToArr(){
-            this.assignees.push(this.tmp_usr[0])//TODO add filters 
+            this.assignees.push(this.tmp_usr)//TODO add filters 
+            this.userList =  JSON.parse(JSON.stringify(this.userList.filter((user ) =>user.username !==this.tmp_usr)))
             this.lll=true
-            console.log(this.assignees)
         },
         goKanban(pname){
             this.$store.commit('setPfilter',pname)
@@ -232,7 +251,6 @@ export default {
         initEditProject(key){
             this.isActive=!this.isActive
             this.editedProject=this.projectsList[key]
-            console.log(this.editedProject)
         },
         initDeleteProject(id){
             this.isActiveDelete = !this.isActiveDelete

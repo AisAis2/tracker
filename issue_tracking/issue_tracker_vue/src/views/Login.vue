@@ -86,7 +86,6 @@ export default {
             await axios
                 .get('api/v1/group/perms')
                 .then((response)=>{
-                    console.log(typeof(response.data))
                     this.$store.commit('setPermsList',response.data)
                 })
                 .catch((error)=>{

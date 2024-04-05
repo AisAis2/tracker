@@ -13,6 +13,8 @@ import Kanban from '../views/Kanban.vue'
 import CreateTicket from '../views/CreateTicket.vue'
 import TicketList from '../views/TicketList'
 import UsersList from '../views/Users.vue'
+import adminUserManagement from '@/views/adminUserManagement.vue'
+import dashboard from '../views/Dashboard.vue'
 const routes = [
   {
     path: '/',
@@ -41,7 +43,10 @@ const routes = [
   {
     path:'/project/:id/',
     name: 'Project',
-    component: Project
+    component: Project,
+    meta:{
+      requireLogin:true
+    }
     
   },
   {
@@ -58,6 +63,14 @@ const routes = [
     path:'/my-account',
     name: 'MyAccount',
     component: AccountPage,
+    meta:{
+      requireLogin:true
+    }
+  },
+  {
+    path:'/users',
+    name:'UserManagement',
+    component: adminUserManagement,
     meta:{
       requireLogin:true
     }
@@ -83,11 +96,11 @@ const routes = [
       requireLogin:true
     }
   },
-  {
-    path:'/ticket/create',
-    name: 'CreateTicket',
-    component: CreateTicket
-  },
+  // {
+  //   path:'/ticket/create',
+  //   name: 'CreateTicket',
+  //   component: CreateTicket
+  // },
   // {
   //   path:'/ticket/all',
   //   name: 'TicketList',
@@ -96,11 +109,19 @@ const routes = [
   //     requireLogin:true
   //   }
   // },
+  // {
+  //   path:'/users/all',
+  //   name: 'Users',
+  //   component: UsersList
+  // },
   {
-    path:'/users/all',
-    name: 'Users',
-    component: UsersList
-  },
+    path:'/dashboard',
+    name: 'dashboard',
+    component: dashboard,
+    meta:{
+      requireLogin:true
+    }
+  }
 ]
 
 const router = createRouter({
@@ -112,6 +133,9 @@ router.beforeEach((to,from,next)=>{
   if(to.matched.some(record=>record.meta.requireLogin) && !store.state.isAuthenticated){//Is it a good practice?
     next({name: 'Login', query:{to:to.path}});
   } else if((to.name =='Login'|to.name=='home') && store.state.isAuthenticated ){
+    next({name:'Kanban',query:{to:to.path}});
+  }
+  else if(to.name=='UserManagement' && store.state.role !=='admin'){
     next({name:'Kanban',query:{to:to.path}});
   }
   else{
