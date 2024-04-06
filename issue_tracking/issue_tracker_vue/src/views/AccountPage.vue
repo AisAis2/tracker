@@ -1,6 +1,7 @@
 <template>
         <div class="is-family-monospace is-justify-content-center is-flex">
-            <div class="is-flex-direction-column" :style="{'width':'600px'}">
+            <div class="box">
+            <div class="is-flex-direction-column m-5" :style="{'width':'300px'}">
                 <div class="field">
                     <label for="" class="label  is-size-4">Name</label>
                     <div class="control  is-size-5">{{ user.username }}</div>
@@ -11,9 +12,15 @@
                     <div class="control  is-size-5" v-else>{{ user.username }}@tracker.com</div>
                 </div>
                 <div class="field">
+                    <label for="" class="label  is-size-4">Role</label>
+                    <div class="control  is-size-5">{{this.$store.state.role}}</div>
+                </div>
+                <div class="field">
                     <div class="control"><button class="button is-danger is-family-monospace is-size-6" @click='logout()'>Log Out</button></div>
                 </div>
+                
             </div>
+        </div>
         </div>
 </template>
 

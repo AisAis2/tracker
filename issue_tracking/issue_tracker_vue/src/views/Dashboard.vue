@@ -1,7 +1,5 @@
 <template>
-<div id="myChart" style="max-width:700px; height:400px"></div>
-
-    
+<canvas id="myChart" style="width:100%;max-width:700px"></canvas>
 </template>
 <script>
 export default{
@@ -11,12 +9,36 @@ export default{
     },
     mounted(){
         let graphScript = document.createElement('script')
-        graphScript.setAttribute('src',"https://www.gstatic.com/charts/loader.js")
+        graphScript.setAttribute('src',"https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js")
         document.head.appendChild(graphScript)
-        if(google){
-            google.charts.load('current', {'packages':['corechart']});
+    
+    
+        const xyValues = [
+  {x:50, y:7},
+  {x:60, y:8},
+  {x:70, y:8},
+  {x:80, y:9},
+  {x:90, y:9},
+  {x:100, y:9},
+  {x:110, y:10},
+  {x:120, y:11},
+  {x:130, y:14},
+  {x:140, y:14},
+  {x:150, y:15}
+];
+
+new Chart("myChart", {
+  type: "scatter",
+  data: {
+    datasets: [{
+      pointRadius: 4,
+      pointBackgroundColor: "rgba(0,0,255,1)",
+      data: xyValues
+    }]
+  },
+});
         }
+        
     }
-}
 
 </script>

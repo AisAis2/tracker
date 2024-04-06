@@ -114,14 +114,14 @@ const routes = [
   //   name: 'Users',
   //   component: UsersList
   // },
-  {
-    path:'/dashboard',
-    name: 'dashboard',
-    component: dashboard,
-    meta:{
-      requireLogin:true
-    }
-  }
+  // {
+  //   path:'/dashboard',
+  //   name: 'dashboard',
+  //   component: dashboard,
+  //   meta:{
+  //     requireLogin:true
+  //   }
+  // }
 ]
 
 const router = createRouter({

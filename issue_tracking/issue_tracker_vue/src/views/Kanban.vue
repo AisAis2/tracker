@@ -46,7 +46,7 @@
           <button
             class="delete"
             aria-label="close"
-            @click="editTicket = false"
+            @click="editTicket = false,editTitle=false, editDesc=false"
           ></button>
         </header>
 
@@ -144,7 +144,7 @@
           <button class="button is-info" @click="toEditTicket(editedTicket)">
             Save
           </button>
-          <button class="button" @click="editTicket = false">Cancel</button>
+          <button class="button" @click="editTicket = false,editTitle=false, editDesc=false">Cancel</button>
         </footer>
       </div>
     </div>
@@ -398,7 +398,6 @@ export default {
     async toEditTicket(ticket) {
       const pp = this.projectList.find((p)=>p.name===this.ticketProject)
       ticket.project = pp
-      console.log(ticket)
       await axios
         .put(`/api/v1/ticket/${ticket.id}/update`, ticket)
         .then((response) => {

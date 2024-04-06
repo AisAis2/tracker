@@ -14,6 +14,27 @@ export default createStore({
   getters: {
   },
   mutations: {
+    logout(){
+      
+      axios.defaults.headers.common["Authorization"] = 'Token '+state.token
+      axios
+      .post('/api/v1/logout/',this.$store.state.token)
+      .catch(error=>{
+          console.log(error)
+      })
+      axios.defaults.headers.common["Authorization"] = ""
+
+      localStorage.removeItem('token')
+      localStorage.removeItem('username')
+      localStorage.removeItem('userid')
+      localStorage.removeItem('user_list')
+      localStorage.removeItem('project_filter')
+      localStorage.removeItem('perms_list')
+
+      store.commit('removeToken')
+      store.commit('removeUser')
+      this.$router.push('/login')
+    },
     initializeStore(state){
       if(localStorage.getItem('token')){
         state.token = localStorage.getItem('token')

@@ -41,7 +41,6 @@
         </nav>
         <div class="is-flex" >
           <div class="is-flex-direction-column  has-background-info-light px-3 pt-3" :style="{'position':'sticky','width':'250px'}">
-              <router-link to='/dashboard' class="navbar-item is-family-monospace has-text-weight-bold">Dashboard</router-link>
               <router-link to='/kanban' class="navbar-item is-family-monospace has-text-weight-bold">Kanban</router-link>
               <router-link to="/projects/" class="navbar-item  is-family-monospace   has-text-weight-bold">Projects</router-link>
               <router-link to="/users/" class="navbar-item  is-family-monospace   has-text-weight-bold" v-if="$store.state.role=='admin'">User Management</router-link>
@@ -125,8 +124,29 @@ methods:{
 
 </script>
 
+<style>
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
 
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+</style>
 
 <style lang="scss">
 @import '../node_modules/bulma';
+
 </style>

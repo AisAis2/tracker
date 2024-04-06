@@ -91,19 +91,25 @@
                 <button class="delete" aria-label="close" @click="isActive=false,editDesc=true,editName=true,cleanTmpObjects()"></button>
             </header>
             <section class="modal-card-body">
-                <label class="has-text-weight-bold">Project Name</label>
-                <p v-if='editName'><span class="mr-5">{{editedProject.name}}</span><a @click='editName=!editName'><i class="fa-solid fa-pen-to-square"></i></a></p>
-                <p v-else><input type="text" v-model='editedProject.name' class="input"></p>
+                <div class="is-flex-direction-column">
+
+                <label class="has-text-weight-bold">Project Title</label>
+                <div :style="{'height':'50px'}">
+                         <p v-if='editName'><span class="mr-5">{{editedProject.name}}</span><a @click='editName=!editName'><i class="fa-solid fa-pen-to-square"></i></a></p>
+                         <p v-else><input type="text" v-model='editedProject.name' class="input"></p>
+                </div>
+
                 <hr>
+                <div :style="{'height':'150px'}">
                 <label class="has-text-weight-bold">Project Description</label> 
                 <p v-if='editDesc'><span class="mr-5">{{editedProject.description}}</span><a @click="editDesc=!editDesc"><i :class="{'fa-solid':true,'fa-pen-to-square':true,'pointer-events':'fill'}"></i></a></p>
                 <p v-else><textarea v-model='editedProject.description' class="textarea"></textarea></p>
-
+                </div>
                 <div class="is-flex-direction-column" v-if="$store.state.role =='admin'">
 
                 <label class="has-text-weight-bold">Assignees</label>
                 <div class="is-flex" v-if="assignees.length>0" :stlye="{'height':'60px', 'border-style':'solid','border-width':'2px'}">
-                    <div v-for="user in assignees" :key="user"  class="pt-2  pb-3 pl-3 pr-5" :style="{'height':'40px','border-style':'solid','border-width':'1px','border-color':'lightgray','border-radius':'20px'}">{{ user }}</div>
+                    <div v-for="user in assignees" :key="user"  class="pt-2  pb-3 pl-3 pr-5 mr-2" :style="{'height':'40px','border-style':'solid','border-width':'1px','border-color':'lightgray'}">{{ user }} <i class="fa-solid fa-xmark" :style="{'cursor':'pointer'}" @click="removeFromList()"></i></div>
                 </div>
                 <br>
                 <div class="select">
@@ -116,11 +122,12 @@
                 </div>
 
 
+            </div>
 
                 </div>
             </section>
             <footer class="modal-card-foot">
-                <button class="button is-success" @click='editProject(editedProject.id)'>Save</button>
+                <button class="button is-info" @click='editProject(editedProject.id)'>Save</button>
                 <button class="button" @click="isActive=false,editDesc=true,editName=true,cleanTmpObjects()">Cancel</button>
             </footer>
         </div>
@@ -208,6 +215,11 @@ export default {
         }
     },
     methods:{
+        removeFromList(username){
+            const pos = this.assignees.map(e =>e.username).indexOf(username)
+            const user_obj = this.assignees.splice(pos,1)
+            this.userList.push({'username':user_obj[0]})
+        },
         userListResolve(){
             if(this.$store.state.user_list.length>0){
  
