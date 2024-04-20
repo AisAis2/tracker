@@ -3,6 +3,9 @@ from rest_framework import permissions
 
 class ProjectPermissions(permissions.BasePermission):
     def has_permission(self,request,view):
+        if request.method != "GET" and request.method!='PUT' and not request.user.has_perm('ticket.change_project'):
+            return False
+
         if not request.user.is_authenticated:
             return False
         return self.has_object_permission(request,view)
@@ -26,7 +29,8 @@ class ProjectPermissions(permissions.BasePermission):
 class TicketPermissions(permissions.BasePermission):
 
     def has_permission(self,request,view):
-
+        if request.method != "GET" and request.method!='PUT' and not request.user.has_perm('ticket.change_ticket'):
+            return False
         if not request.user.is_authenticated:
             return False
         return self.has_object_permission(request,view,request.data)
