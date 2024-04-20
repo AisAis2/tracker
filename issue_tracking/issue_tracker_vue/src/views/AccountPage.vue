@@ -51,10 +51,11 @@ export default {
             localStorage.removeItem('user_list')
             localStorage.removeItem('project_filter')
             localStorage.removeItem('perms_list')
-
+            localStorage.removeItem('role')
+            localStorage.removeItem('user')
             this.$store.commit('removeToken')
             this.$store.commit('removeUser')
-            this.$router.push('/login')
+            this.$router.go('/login')
 
         },
         getUserStore(){

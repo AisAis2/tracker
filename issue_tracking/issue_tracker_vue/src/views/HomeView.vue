@@ -12,7 +12,7 @@
 
             <div class="is-flex-direction-column  m-5">
                   <div class="is-flex" :style="{'font-size':'200px','width':'300px','cursor':'pointer'}">
-                  <i class="fa-solid fa-user-tie"></i>
+                  <i class="fa-solid fa-user-tie" @click="submitForm(demomanager)"></i>
                   </div>
                   <p class="is-size-3">Demo Manager</p>
             </div>
@@ -22,7 +22,7 @@
       <div class="is-flex">
             <div class="is-flex-direction-column m-5">
               <div class="is-flex " :style="{'font-size':'200px','width':'300px','cursor':'pointer'}">
-              <i class="fa-solid fa-user"></i>
+              <i class="fa-solid fa-user" @click="submitForm(cuser)"></i>
             </div>
 
                 <p class="is-size-3">Demo User</p>
@@ -43,9 +43,9 @@ export default {
   name: 'HomeView',
   data(){
     return{
-      demoadmin:{'username':'demoadmin','password':'Doom234?'},
-      demomanager:{},
-      cuser:{},
+      demoadmin:{'username':'demoadmin','password':'Diablo234?'},
+      demomanager:{'username':'demomanager','password':'Diablo234?'},
+      cuser:{'username':'demouser','password':'Diablo234?'},
       errors:[]
     }
   },
@@ -78,7 +78,6 @@ export default {
             await axios
                 .get('api/v1/group/perms')
                 .then((response)=>{
-                    console.log(typeof(response.data))
                     this.$store.commit('setPermsList',response.data)
                 })
                 .catch((error)=>{
@@ -110,7 +109,6 @@ export default {
             await axios
                 .post('/api/v1/login/', formData)
                 .then(response =>{
-                    console.log(response)
                     const token = response.data.token
                     this.$store.commit('setToken',token)
 

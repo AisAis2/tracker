@@ -54,8 +54,7 @@ export default {
         }
     },
     mounted(){
-        document.title = 'Log In | IT',
-        this.getUser();
+        document.title = 'Log In | IT'
     },
     methods:{
         async getRole(){
