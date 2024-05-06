@@ -33,7 +33,7 @@
 
                     <hr>
 
-                    No account? <router-link to="/">Click here</router-link> to sign up.
+                    <span :style="{'cursor':'pointer'}" @click="login_as_demo">No account? Click here to sign in as <span class="has-text-weight-bold">Demo User</span>.</span>
                 </form>
             </div>
 
@@ -51,12 +51,20 @@ export default {
             username:'',
             password:'',
             errors:[],
+            demoUserFormData:{
+            }
         }
     },
     mounted(){
         document.title = 'Log In | IT'
     },
     methods:{
+        login_as_demo(){
+            this.username='demouser'
+            this.password='Doom234?'
+            this.submitForm();
+            
+        },
         async getRole(){
       await axios
               .get('/api/v1/group/group')
@@ -109,10 +117,10 @@ export default {
 
             localStorage.removeItem('token')
 
-            const formData = {
-                username: this.username,
-                password: this.password
-            }
+                const formData = {
+                    username: this.username,
+                    password: this.password
+                }
             await axios
                 .post('/api/v1/login/', formData)
                 .then(response =>{
@@ -124,8 +132,7 @@ export default {
                     localStorage.setItem('token', token)
                     this.getUser()
 
-                    const toPath = this.$route.query.to || '/'
-                    this.$router.push(toPath)
+                    this.$router.go('/kanban')
                     this.getPerms();
                     this.getRole();
 

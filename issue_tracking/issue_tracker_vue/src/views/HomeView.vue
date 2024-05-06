@@ -4,23 +4,6 @@
     <div class="box mt-6" :style="{'width':'700px','height':'700px','border-style':'dotted'}">
       <div class="is-flex">
             <div class="is-flex-direction-column m-5">
-              <div class="is-flex" :style="{'font-size':'200px','width':'300px','cursor':'pointer'}">
-                  <i class="fa-solid fa-user-secret" @click="submitForm(demoadmin)"></i>
-                </div>
-                <p class="is-size-3">Demo Admin</p>
-            </div>
-
-            <div class="is-flex-direction-column  m-5">
-                  <div class="is-flex" :style="{'font-size':'200px','width':'300px','cursor':'pointer'}">
-                  <i class="fa-solid fa-user-tie" @click="submitForm(demomanager)"></i>
-                  </div>
-                  <p class="is-size-3">Demo Manager</p>
-            </div>
-
- 
-      </div>
-      <div class="is-flex">
-            <div class="is-flex-direction-column m-5">
               <div class="is-flex " :style="{'font-size':'200px','width':'300px','cursor':'pointer'}">
               <i class="fa-solid fa-user" @click="submitForm(cuser)"></i>
             </div>
@@ -28,10 +11,7 @@
                 <p class="is-size-3">Demo User</p>
             </div>
       </div>
-      <div class="is-flex">
-    <p class="is-size-1 ml-5">Login as:</p>
 
-    </div>
     </div>
     
   </div>
@@ -43,8 +23,6 @@ export default {
   name: 'HomeView',
   data(){
     return{
-      demoadmin:{'username':'demoadmin','password':'Diablo234?'},
-      demomanager:{'username':'demomanager','password':'Diablo234?'},
       cuser:{'username':'demouser','password':'Diablo234?'},
       errors:[]
     }

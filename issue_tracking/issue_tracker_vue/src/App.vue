@@ -39,11 +39,15 @@
             </div>
           </div>
         </nav>
-        <div class="is-flex" >
-          <div class="is-flex-direction-column  has-background-info-light px-3 pt-3" :style="{'position':'sticky','width':'250px'}">
-              <router-link to='/kanban' class="navbar-item is-family-monospace has-text-weight-bold">Kanban</router-link>
-              <router-link to="/projects/" class="navbar-item  is-family-monospace   has-text-weight-bold">Projects</router-link>
-              <router-link to="/users/" class="navbar-item  is-family-monospace   has-text-weight-bold" v-if="$store.state.role=='admin'">User Management</router-link>
+        <div class="is-flex " :style="{'font-size':'18px'}" >
+            <div class="is-flex-direction-column  has-background-info-light px-3 pt-3" :style="{'position':'sticky','width':'250px'}">
+              <div>
+                <router-link to='/kanban' class="navbar-item is-family-monospace has-text-weight-bold"> <span><i class="fa-solid fa-chart-simple"></i> Kanban</span></router-link>
+              </div>
+              <div>
+                <router-link to="/projects/" class="navbar-item  is-family-monospace   has-text-weight-bold"><span><i class="fa-solid fa-diagram-project"></i> Projects</span> </router-link>
+              </div>
+                <router-link to="/users/" class="navbar-item  is-family-monospace   has-text-weight-bold" v-if="$store.state.role=='admin'">User Management</router-link>
             </div>
           <div class="mx-5 my-2" :style="{'height':'1000px','width':'1500px','overflow-x':'hidden'}">
             <router-view/>
