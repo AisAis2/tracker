@@ -75,7 +75,7 @@ export default {
               console.log(error.config)
           })
         },  
-        async submitForm(user){
+        async submitForm(){
             axios.defaults.headers.common['Authorization'] = ""
 
             localStorage.removeItem('token')

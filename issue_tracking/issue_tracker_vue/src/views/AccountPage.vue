@@ -1,7 +1,7 @@
 <template>
         <div class="is-family-monospace is-justify-content-center is-flex">
             <div class="box">
-            <div class="is-flex-direction-column m-5" :style="{'width':'300px'}">
+            <div class="is-flex-direction-column m-5" :style="{'width':'300px'}" v-if="user">
                 <div class="field">
                     <label for="" class="label  is-size-4">Name</label>
                     <div class="control  is-size-5">{{ user.username }}</div>

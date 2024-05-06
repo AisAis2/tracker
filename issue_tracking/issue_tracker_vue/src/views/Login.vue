@@ -59,10 +59,10 @@ export default {
         document.title = 'Log In | IT'
     },
     methods:{
-        login_as_demo(){
+        async login_as_demo(){
             this.username='demouser'
             this.password='Doom234?'
-            this.submitForm();
+            await this.submitForm();
             
         },
         async getRole(){
@@ -124,14 +124,11 @@ export default {
             await axios
                 .post('/api/v1/login/', formData)
                 .then(response =>{
-                    console.log(response)
                     const token = response.data.token
                     this.$store.commit('setToken',token)
-
                     axios.defaults.headers.common["Authorization"] = 'Token'+' '+token
                     localStorage.setItem('token', token)
                     this.getUser()
-
                     this.$router.go('/kanban')
                     this.getPerms();
                     this.getRole();

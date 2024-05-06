@@ -21,7 +21,7 @@ const routes = [
     name: 'kanban',
     component: Kanban,
         meta:{
-      requireLogin:false,
+      requireLogin:true ,
     }
   },
 
