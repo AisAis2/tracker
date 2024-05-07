@@ -4,7 +4,7 @@
                     {{status}}({{ ticket_list.length }})
                     <a @click="$emit('initCreateTicket',status)"><span><i class="fa-solid fa-plus"></i></span></a>
             </div>
-            <div class="is-flex mx-5" :style="{'height':'650px','width':'320px','overflow-y':'auto','overflow-x':'hidden','border-style':'solid','border-width':'1px','border-radius':'20px'}" >
+            <div class="is-flex mx-5" :style="{'height':'650px','max-width':'320px','overflow-y':'auto','overflow-x':'hidden','border-style':'solid','border-width':'1px','border-radius':'20px'}" >
                 <div class="drop-zone" draggable="false">
                     <div class="drag-el" v-for="ticket in ticket_list" :key="ticket.id">
                             <ticketBoxVue :ticket="ticket" draggable=true @dragstart="startDrag($event,ticket)" @clicked="$emit('ticketClick',ticket.id)"/>
