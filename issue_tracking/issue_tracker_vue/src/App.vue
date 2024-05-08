@@ -1,9 +1,8 @@
 <template>
 <div id='wrapper'> 
   <div class="columns is-gapless">
-
     <div class="column">
-              <nav class="navbar is-link is-light p-1" :style="{'border-style':'none','box-shadow':'1px 1px'}">
+              <nav class="navbar is-dark p-1" :style="{'border-style':'none','box-shadow':'1px 1px'}">
           <div class="navbar-brand">
             <router-link to='/' class="navbar-item"><i class="fa-solid fa-house"></i></router-link>
             <a class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar-menu" @click ="showMobileMenu = !showMobileMenu">
@@ -39,17 +38,17 @@
             </div>
           </div>
         </nav>
-        <div class="is-flex " :style="{'font-size':'18px'}" >
-            <div class="is-flex-direction-column  has-background-info-light px-3 pt-3" :style="{'position':'sticky','width':'250px'}">
+        <div class="is-flex " :style="{'font-size':'15px'}" >
+            <div class="is-flex-direction-column" :style="{'position':'sticky','width':'250px','padding':'10px'}">
               <div>
-                <router-link to='/kanban' class="navbar-item is-family-monospace has-text-weight-bold"> <span><i class="fa-solid fa-chart-simple"></i> Kanban</span></router-link>
+                <router-link to='/kanban' class="navbar-item has-text-grey"> <span><i class="fa-solid fa-chart-simple"></i> Kanban</span></router-link>
               </div>
               <div>
-                <router-link to="/projects/" class="navbar-item  is-family-monospace   has-text-weight-bold"><span><i class="fa-solid fa-diagram-project"></i> Projects</span> </router-link>
+                <router-link to="/projects/" class="navbar-item    has-text-grey"><span><i class="fa-solid fa-diagram-project"></i> Projects</span> </router-link>
               </div>
-                <router-link to="/users/" class="navbar-item  is-family-monospace   has-text-weight-bold" v-if="$store.state.role=='admin'">User Management</router-link>
+                <router-link to="/users/" class="navbar-item     has-text-grey" v-if="$store.state.role=='admin'">User Management</router-link>
             </div>
-          <div class="mx-5 my-2" :style="{'height':'1000px','width':'1500px','overflow-x':'hidden'}">
+          <div class="mx-5 my-2" :style="{'height':'1000px','max-width':'1200px','overflow-x':'hidden'}">
             <router-view/>
           </div>  
         </div>

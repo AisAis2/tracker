@@ -1,15 +1,14 @@
 <template>
-  <div class="kanban columns is-multiline is-gapeless is-family-monospace ">
-    <nav class="breadcrumb mt-4 mx-5 px-4" aria-label="breadcrumbs">
-  <ul>
-    <li><a href="/">Home</a></li>
-    <li class="is-active"><a href="#" aria-current="page">Board</a></li>
-  </ul>
-</nav>
-    <div class="column is-12 mx-4 px-5">
-      <div class="is-family-monospace">Project Filter</div>
-        <div class="select is-info">
-            <select v-model='project_filter' @change = "filterTicketList()" class="is-family-monospace">
+  <div class="kanban is-flex is-flex-direction-column">
+    <nav class="breadcrumb " aria-label="breadcrumbs">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li class="is-active"><a href="#" aria-current="page">Board</a></li>
+      </ul>
+    </nav>
+    <div class="is-flex" :style="{'margin-left':'5px','margin-bottom':'10px'}">
+        <div class="select is-dark is-normal">
+            <select v-model='project_filter' @change = "filterTicketList()">
               <option >General</option>
               <option
               v-for='project in projectList'
@@ -18,18 +17,23 @@
             </select>
         </div>
     </div>
-      <kanbancolumnVue
-      v-for='(status,counter) in cols'
-      :key =status
-      :status="status" 
-      :ticket_list="ll[counter]"
-      @drop="onDrop($event,status)"
-      @dragover.prevent 
-      @dragenter.prevent 
-      draggable="false"
-      @ticketClick='clickedEmit'
-      @initCreateTicket='initCreate'
-      />
+      
+      <div class="is-flex is-flex-direction-row">
+        <kanbancolumnVue
+        v-for='(status,counter) in cols'
+        :key =status
+        :status="status" 
+        :ticket_list="ll[counter]"
+        :project=project_filter
+        @drop="onDrop($event,status)"
+        @dragover.prevent 
+        @dragenter.prevent 
+        draggable="false"
+        @ticketClick='clickedEmit'
+        @initCreateTicket='initCreate'
+        />
+      </div>
+
 
 
 
@@ -242,7 +246,7 @@
     </div>
   </div>
   <a
-      class="is-size-1 column is-12 pl-5 px-5 mx-3"
+      class="is-size-2 column has-text-dark"
       @drop="onDropDelete($event)"
       @dragover.prevent="binColor='red'"
       @dragleave.prevent="binColor='blue'"

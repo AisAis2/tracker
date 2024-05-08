@@ -1,46 +1,39 @@
 <template>
-    <div class="log-in" :style="{'margin-top':'50px'}">
-            <div class="page-sign-up">
-        <div class="columns">
-            <div class="column is-4 is-offset-4" :style="{'width':'400px',}">
-                <div class="box" :style="{'width':'400px'}">
-                <h1 class="title">Log in</h1>
-                <form @submit.prevent="submitForm">
-                    <div class="field">
-                        <label for="">Username</label>
-                            <div class="control">
-                                <input type="text" class="input" v-model="username">
+    <div class="" :style="{'margin-top':'50px','width':'100%'}">
+                                <div class="is-flex is-flex-direction-column " :style="{'max-width':'400px','border-style':'solid','border-width':'1px','padding':'30px','border-color':'hsl(0, 0%, 48%)'}">
+                                <h1 class="title">Log in</h1>
+                                <form @submit.prevent="submitForm">
+                                    <div class="field">
+                                        <label for="">Username</label>
+                                            <div class="control">
+                                                <input type="text" class="input" v-model="username">
+                                            </div>
+                                    </div>
+                                    <div class="field">
+                                        <label for="">Password</label>
+                                            <div class="control">
+                                                <input type="password" class="input" v-model="password">
+                                            </div>
+                                    </div>
+
+                                    <div class="notification is-danger" v-if="errors.length">
+                                        <p v-for= "error in errors" v-bind:key="error">
+                                            {{error}}
+                                        </p>
+                                    </div>
+                                    <div class="field">
+                                        <div class="control">
+                                            <button class="button is-dark">Login</button>
+                                        </div>
+                                    </div>
+
+
+                                    <hr>
+
+                                    <span :style="{'cursor':'pointer'}" @click="login_as_demo">No account? Click here to sign in as <span class="has-text-weight-bold">Demo User</span>.</span>
+                                </form>
                             </div>
-                    </div>
-                    <div class="field">
-                        <label for="">Password</label>
-                            <div class="control">
-                                <input type="password" class="input" v-model="password">
-                            </div>
-                    </div>
-
-                    <div class="notification is-danger" v-if="errors.length">
-                        <p v-for= "error in errors" v-bind:key="error">
-                            {{error}}
-                        </p>
-                    </div>
-                    <div class="field">
-                        <div class="control">
-                            <button class="button is-dark">Login</button>
-                        </div>
-                    </div>
-
-
-                    <hr>
-
-                    <span :style="{'cursor':'pointer'}" @click="login_as_demo">No account? Click here to sign in as <span class="has-text-weight-bold">Demo User</span>.</span>
-                </form>
-            </div>
-
-            </div>
         </div>
-    </div>
-    </div>
 </template>
 <script>
 import axios from 'axios'
@@ -129,7 +122,7 @@ export default {
                     axios.defaults.headers.common["Authorization"] = 'Token'+' '+token
                     localStorage.setItem('token', token)
                     this.getUser()
-                    this.$router.go('/kanban')
+                    this.$router.push('/kanban')
                     this.getPerms();
                     this.getRole();
 

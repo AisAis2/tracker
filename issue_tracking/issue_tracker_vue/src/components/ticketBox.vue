@@ -1,8 +1,8 @@
 <template>
-    <div :class="{'box':true, 'my-5':true,'mx-4':true, bgColor:true,'is-family-monospace':true  }" :style="{'height':'130px','overflow':'hidden','border':'solid','box-shadow':'1px 1px','border-width':'1px'}" >
+    <!-- <div :class="{'box':true, 'my-2':true,'mx-4':true, bgColor:true,'is-family-monospace':true  }" :style="{'height':'130px','overflow':'hidden','border':'solid','box-shadow':'1px 1px','border-width':'1px'}" >
         <div class="is-flex is-flex-direction-column ">
             <div class="is-flex is-flex-direction-row" :style="{'height':'45px','overflow':'hidden'}">
-                <div class="is-flex" :style="{'width':'200px'}">
+                <div class="is-flex" :style="{'max-width':'250px'}">
                     <span class="is-size-6 has-text-weight-semibold is-align-content-center is-clipped is-family-monospace">{{ticket.title}}
 
                     
@@ -26,6 +26,17 @@
 
             </div>
         </div>
+    </div> -->
+    <div class="is-flex is-flex-direction-column" :style="{'width':'250px','border-style':'solid','height':'120px','border-width':'1px','margin-left':'10px','margin-top':'10px','margin-right':'15px'}">
+        <div :style="{'margin':'10px','max-width':'auto','max-height':'auto'}" class="is-flex is-flex-direction-column">
+            <div class="is-size-7 is-family-monospace is-clipped" :style="{'max-width':'auto','word-break':'break-all','height':'50px','margin-bottom':'5px'}">{{ticket.title}}</div>
+            <span class="is-size-6 " :style="{'display':'inline-block','margin-bottom':'3px'}">
+                <span :style="{'padding':'2px'}" class="has-background-success is-uppercase has-text-weight-semibold is-size-7">{{project}}</span>
+            </span>
+            <div class="is-size-7 has-text-weight-bold is-uppercase" :class="{'has-text-danger':textColor()[0],'has-text-warning':textColor()[1],'has-text-info':textColor()[2]}">
+                    {{ ticket.priority }}
+            </div>
+        </div>
     </div>
 </template>
 
@@ -45,8 +56,12 @@ export default {
             return 'has-background-primary'//this.background_colors[this.ticket.priority]
         }
     },
+    mounted(){
+        console.log(this.project)
+    },
     props:{
-        ticket:Object
+        ticket:Object,
+        project:String,
     },
 
     methods:{
