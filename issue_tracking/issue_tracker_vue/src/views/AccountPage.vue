@@ -1,6 +1,6 @@
 <template>
-        <div class="is-family-monospace is-justify-content-center is-flex">
-            <div class="box">
+        <div class="is-family-monospace is-justify-content-center is-flex" style="margin-top:10px;margin-left:300px">
+            <div class="is-flex is-flex-direction-column" style="border-style:solid;border-width:1px">
             <div class="is-flex-direction-column m-5" :style="{'width':'300px'}" v-if="user">
                 <div class="field">
                     <label for="" class="label  is-size-4">Name</label>

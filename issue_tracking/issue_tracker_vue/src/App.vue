@@ -28,7 +28,7 @@
                   <template v-else>
                     <router-link to='/my-account' class="button is-light">
                     <span class="icon"><i class="fa-solid fa-user"></i></span>
-                      <span class="is-family-monospace">Actions</span>
+                      <span class="is-family-monospace">Account</span>
                     </router-link>
    
                   </template>
@@ -39,7 +39,7 @@
           </div>
         </nav>
         <div class="is-flex " :style="{'font-size':'15px'}" >
-            <div class="is-flex-direction-column" :style="{'position':'sticky','width':'250px','padding':'10px'}">
+            <div class="is-flex-direction-column" :style="{'position':'sticky','width':'250px','padding':'10px','border-style':'solid','border-width':'1px'}">
               <div>
                 <router-link to='/kanban' class="navbar-item has-text-grey"> <span><i class="fa-solid fa-chart-simple"></i> Kanban</span></router-link>
               </div>

@@ -1,11 +1,11 @@
 <template>
-  <div class="kanban is-flex is-flex-direction-column">
-    <nav class="breadcrumb " aria-label="breadcrumbs">
+  <div class="kanban is-flex is-flex-direction-column" style="margin-top:20px">
+    <!-- <nav class="breadcrumb " aria-label="breadcrumbs">
       <ul>
         <li><a href="/">Home</a></li>
         <li class="is-active"><a href="#" aria-current="page">Board</a></li>
       </ul>
-    </nav>
+    </nav> -->
     <div class="is-flex" :style="{'margin-left':'5px','margin-bottom':'10px'}">
         <div class="select is-dark is-normal">
             <select v-model='project_filter' @change = "filterTicketList()">

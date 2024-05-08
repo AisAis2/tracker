@@ -1,5 +1,5 @@
 <template>
-    <div class="" :style="{'margin-top':'50px','width':'100%'}">
+    <div class="is-flex is-justify-content-center is-flex-direction-row" :style="{'margin-top':'50px','width':'auto','height':'auto','margin-left':'400px'}">
                                 <div class="is-flex is-flex-direction-column " :style="{'max-width':'400px','border-style':'solid','border-width':'1px','padding':'30px','border-color':'hsl(0, 0%, 48%)'}">
                                 <h1 class="title">Log in</h1>
                                 <form @submit.prevent="submitForm">
